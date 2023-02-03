@@ -36,3 +36,13 @@ export function pickFrom(elements: any[], count: number) {
 
     return Array.from(indices.values()).map(i => elements[i]);
 }
+
+export function range(a: number, b: number, step: number = 1): number[] {
+    const ret = [];
+
+    for (let i = a; i < b; i += step) {
+        ret.push(i);
+    }
+
+    return ret;
+}

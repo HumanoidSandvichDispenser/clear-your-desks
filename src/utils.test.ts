@@ -1,6 +1,5 @@
-/*import { describe, expect, test } from "@jest/globals";*/
 import { assert, describe, expect, it } from "vitest";
-import { pickFrom, random } from "./src/utils";
+import { pickFrom, random, range } from "./utils";
 
 describe("pickFrom method", () => {
     it("should return unique values", () => {
@@ -15,13 +14,6 @@ describe("pickFrom method", () => {
 });
 
 describe("random method", () => {
-    /*
-    it("should return a random number within a specified range", () => {
-        let a = 4;
-        let b = 7;
-        expect(random(a, b))
-    });
-    */
     it.each([[1, 2], [4, 7], [-5, 8]])(
         "should return a random number within a specified range",
         (a, b) => {
@@ -29,4 +21,14 @@ describe("random method", () => {
             assert(c >= a && c <= b);
         }
     )
+});
+
+describe("range method", () => {
+    it("should return a list of values from a to b", () => {
+        expect(range(0, 5)).toEqual([0, 1, 2, 3, 4]);
+    });
+
+    it("should increment each element by step size", () => {
+        expect(range(1, 5, 2)).toEqual([1, 3]);
+    });
 });
