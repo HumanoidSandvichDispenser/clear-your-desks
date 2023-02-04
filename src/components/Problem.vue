@@ -11,9 +11,7 @@ const props = defineProps({
 
 <template>
     <div>
-        <h1>{{ store.currentTime }}</h1>
-        <span v-katex:auto>
-            \(f(x) = {{ store.currentTime }}\)
+        <span v-katex="question">
         </span>
     </div>
 </template>

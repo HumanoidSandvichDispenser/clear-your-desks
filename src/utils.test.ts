@@ -1,14 +1,18 @@
 import { assert, describe, expect, it } from "vitest";
-import { pickFrom, random, range } from "./utils";
+import { pickNFrom, random, range } from "./utils";
 
 describe("pickFrom method", () => {
     it("should return unique values", () => {
-        let elements = pickFrom([1, 2, 3, 4], 2);
-        assert(elements[0] != elements[1]);
+        for (let i = 0; i < 25; i++) {
+            let elements = pickNFrom([1, 2, 3, 4], 2);
+            assert(elements[0] != undefined);
+            assert(elements[1] != undefined);
+            assert(elements[0] != elements[1]);
+        }
     });
 
     it("should return a copy of the elements when size is too long", () => {
-        let elements = pickFrom([1, 2], 3);
+        let elements = pickNFrom([1, 2], 3);
         expect(elements).toEqual([1, 2]);
     });
 });
@@ -20,7 +24,7 @@ describe("random method", () => {
             let c = random(a, b);
             assert(c >= a && c <= b);
         }
-    )
+    );
 });
 
 describe("range method", () => {

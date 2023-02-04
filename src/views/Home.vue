@@ -8,6 +8,10 @@ const store = useStore();
 
 <template>
     <div>
+        <problem
+            v-for="problem in store.problems"
+            :question="problem.question"
+        />
         <problem question="the quick brown fox jumps over the lazy dog" />
     </div>
     <div v-if="store.isRunning">

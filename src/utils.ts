@@ -1,20 +1,26 @@
 export function random(min: number, max: number) {
-    return Math.random() * (max - min) % max + min;
+    return Math.floor(Math.random() * (max - min)) % max + min;
 }
 
-export function pickFrom(elements: any[], count: number) {
+export function pickFrom<T>(elements: T[]): T {
+    return elements[random(0, elements.length - 1)];
+}
+
+export function pickNFrom(elements: any[], count: number) {
     if (count >= elements.length) {
         // return a clone of the array if the user wants to pick more than they can
+        console.warn("Count is greater than number of elements.");
         return Array.from(elements);
     }
 
     const indices = new Set<number>();
 
     for (let i = 0; i < count; i++) {
-        let offset = random(0, elements.length);
+        let offset = random(1, elements.length);
         let idx = 0;
         let iterations = 0;
         for (let j = 0; j < offset; j++) {
+            iterations = 0;
             while (indices.has(idx)) {
                 idx = (idx + 1) % elements.length;
                 iterations++;
