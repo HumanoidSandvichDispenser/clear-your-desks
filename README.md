@@ -13,3 +13,37 @@ Improved memory quiz.
   [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and
   disable Vetur) + [TypeScript Vue Plugin
   (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+
+## Project Setup
+
+Install dependencies
+
+```
+npm run install
+```
+
+Compile and hot-reload for development
+
+```
+npm run dev
+```
+
+Build and minify for production
+
+```
+npm run build
+```
+
+### Unit Testing
+
+Run all test suites once
+
+```
+npm run test
+```
+
+Rerun tests on file changes
+
+```
+npm run vitest
+```
