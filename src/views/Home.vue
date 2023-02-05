@@ -1,26 +1,94 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import Problem from "../components/Problem.vue";
-import { useStore } from "../store";
+import { ref } from "vue";
+import { useSkillsStore } from "../store/skills";
 
-const store = useStore();
+
+const selectedMode = ref("practice");
+
+const skills = useSkillsStore();
+const selectedSkills = ref<string[]>([]);
+
+function toggleTopic(topic: string) {
+    let idx = selectedSkills.value.indexOf(topic);
+    if (idx > -1) {
+        selectedSkills.value.splice(idx, 1);
+    } else {
+        selectedSkills.value.push(topic);
+    }
+}
 </script>
 
 <template>
-    <div>
-        <problem
-            v-for="problem in store.problems"
-            :question="problem.question"
-        />
-        <problem question="the quick brown fox jumps over the lazy dog" />
+    <div class="selection-buttons">
+        <button
+            :class="{
+                enabled: selectedMode == 'practice'
+            }"
+            @click="selectedMode = 'practice'"
+        >
+            Practice
+            <p>Standard memory quiz practice</p>
+        </button>
+        <button
+            :class="{
+                enabled: selectedMode == 'score-attack'
+            }"
+            @click="selectedMode = 'score-attack'"
+        >
+            Score Attack
+            <p>Try to get the highest score possible</p>
+        </button>
     </div>
-    <div v-if="store.isRunning">
-        {{ store.currentTime }} seconds left
+    <hr>
+    <div class="selection-buttons">
+        <button
+            v-for="skill in skills.current"
+            :class="{
+                enabled: selectedSkills.includes(skill.name)
+            }"
+            @click="toggleTopic(skill.name)"
+        >
+            {{ skill.name }}
+            <p class="subtext">
+                {{ skill.retentionPercentage }}
+            </p>
+        </button>
     </div>
-    <div v-else>
-        Time limit: {{ store.maxTime }} seconds
-    </div>
-    <input type="range" v-model="store.maxTime" min="60" max="300" step="15" />
-    <button v-if="store.isRunning" @click="store.stop">Stop</button>
-    <button v-else @click="store.start">Start</button>
 </template>
+
+<style>
+.selection-buttons {
+    display: flex;
+    column-gap: 16px;
+    row-gap: 16px;
+    max-width: 768px;
+    column-count: 3;
+    flex-wrap: wrap;
+}
+
+.selection-buttons > button {
+    padding: 1em 2em;
+    text-align: left;
+    transition-duration: 200ms;
+    flex: 1;
+}
+
+.selection-buttons > button.enabled {
+    color: var(--bg0);
+    background-color: var(--fg0);
+    transition-duration: 200ms;
+}
+
+.selection-buttons > button > p {
+    margin-top: 1em;
+}
+
+.selection-buttons > button > p.subtext {
+    color: var(--fg1);
+    font-size: 12px;
+}
+
+.selection-buttons > button.enabled > p.subtext {
+    color: var(--bg0);
+}
+</style>

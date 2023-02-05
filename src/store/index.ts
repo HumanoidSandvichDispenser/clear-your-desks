@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import ProblemData from "../problem-data";
 import TrigProblem from "../trig-problem";
 

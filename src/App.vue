@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import { useSkillsStore } from "./store/skills";
 
+const skills = useSkillsStore();
+skills.readFromLocalStorage();
+console.log(skills.current);
 </script>
 
 <template>
