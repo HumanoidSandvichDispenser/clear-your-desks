@@ -23,6 +23,14 @@ export const ANGLES = [
 ];
 
 export default class TrigProblem extends ProblemData {
+    fn: string = "";
+    args: string = "";
+
+    constructor(question: string, answer: string, fn: string) {
+        super(question, answer);
+        this.fn = fn;
+    }
+
     static generate(count: number): ProblemData[] | undefined {
         // randomly pick `count` amount of angles
         let numerators = pickNFrom(ANGLES, count);
@@ -38,11 +46,11 @@ export default class TrigProblem extends ProblemData {
         let tex = `\\${fn}(${angle})`;
         try {
             let expr = nerdamer.convertFromLaTeX(tex);
-            return new TrigProblem(tex, expr.toTeX());
+            return new TrigProblem(tex, expr.toTeX(), fn);
         } catch (err) {
             if (err instanceof Error) {
                 if (err.message.includes(" is undefined for ")) {
-                    return new TrigProblem(tex, "\\textrm{undefined}");
+                    return new TrigProblem(tex, "\\textrm{undefined}", fn);
                 }
             }
             throw err;

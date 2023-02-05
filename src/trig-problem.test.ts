@@ -26,17 +26,17 @@ describe("trig problem generation", () => {
 
 describe("checkAnswer", () => {
     it("should return true for correct answers", () => {
-        let problem = new TrigProblem("", "2pi/3");
+        let problem = new TrigProblem("", "2pi/3", "");
         expect(problem.checkAnswer("2 * pi / 3")).toBe(true);
     });
 
     it("should return false for incorrect answers", () => {
-        let problem = new TrigProblem("", "2pi/3");
+        let problem = new TrigProblem("", "2pi/3", "");
         expect(problem.checkAnswer("pi / 3")).toBe(false);
     });
 
     it("should generate a correct answer given an angle", () => {
-        expect(TrigProblem.generateSingle("sin", 0).answer).toBe("0");
-        expect(TrigProblem.generateSingle("cos", 0).answer).toBe("1");
+        expect(TrigProblem.generateSingle("sin", "0").answer).toBe("0");
+        expect(TrigProblem.generateSingle("cos", "0").answer).toBe("1");
     });
 });

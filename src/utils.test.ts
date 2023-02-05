@@ -1,7 +1,7 @@
 import { assert, describe, expect, it } from "vitest";
-import { pickNFrom, random, range } from "./utils";
+import { pickFrom, pickNFrom, random, range } from "./utils";
 
-describe("pickFrom method", () => {
+describe("pickFrom methods", () => {
     it("should return unique values", () => {
         for (let i = 0; i < 25; i++) {
             let elements = pickNFrom([1, 2, 3, 4], 2);
@@ -11,9 +11,18 @@ describe("pickFrom method", () => {
         }
     });
 
-    it("should return a copy of the elements when size is too long", () => {
+    it("should return `count` elements for all values of `count`", () => {
         let elements = pickNFrom([1, 2], 3);
-        expect(elements).toEqual([1, 2]);
+        expect(elements.length).toEqual(3);
+        elements = pickNFrom([2, 4], 4);
+        expect(elements.length).toEqual(4);
+        elements = pickNFrom([1], 4);
+        expect(elements).toEqual([1, 1, 1, 1]);
+    });
+
+    it("should throw an exception if array is empty", () => {
+        expect(() => pickFrom([])).toThrow(RangeError);
+        expect(() => pickNFrom([], 1)).toThrow(RangeError);
     });
 });
 

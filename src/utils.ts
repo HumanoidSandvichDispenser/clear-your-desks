@@ -3,17 +3,20 @@ export function random(min: number, max: number) {
 }
 
 export function pickFrom<T>(elements: T[]): T {
+    if (elements.length == 0) {
+        throw new RangeError("can not pick from an empty array");
+    }
+
     return elements[random(0, elements.length - 1)];
 }
 
 export function pickNFrom(elements: any[], count: number) {
-    if (count >= elements.length) {
-        // return a clone of the array if the user wants to pick more than they can
-        console.warn("Count is greater than number of elements.");
-        return Array.from(elements);
+    if (elements.length == 0) {
+        throw new RangeError("can not pick from an empty array");
     }
 
     const indices = new Set<number>();
+    const ret = [];
 
     for (let i = 0; i < count; i++) {
         let offset = random(1, elements.length);
@@ -37,10 +40,18 @@ export function pickNFrom(elements: any[], count: number) {
                 }
             }
         }
+
         indices.add(idx);
+        ret.push(idx);
+
+        if (indices.size >= elements.length) {
+            // every index is marked as used, so we should make every index
+            // possible to reach again
+            indices.clear();
+        }
     }
 
-    return Array.from(indices.values()).map(i => elements[i]);
+    return Array.from(ret.values()).map(i => elements[i]);
 }
 
 export function range(a: number, b: number, step: number = 1): number[] {
