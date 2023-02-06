@@ -4,6 +4,10 @@ import ProblemData from "../problem-data";
 import TrigProblem from "../trig-problem";
 
 export const useStore = defineStore("store", () => {
+    const selectedMode = ref("practice");
+
+    const selectedSkills = ref<string[]>([]);
+
     const problems  = ref<ProblemData[]>([]);
 
     const maxTime = ref(120);
@@ -15,6 +19,7 @@ export const useStore = defineStore("store", () => {
     let runningTimeout: NodeJS.Timer;
 
     function start() {
+        stop(); // stop in case we already started and then restart
         generateProblems();
         currentTime.value = maxTime.value;
         isRunning.value = true;
@@ -28,6 +33,7 @@ export const useStore = defineStore("store", () => {
     }
 
     function stop() {
+        problems.value = [];
         isRunning.value = false;
         if (runningTimeout) {
             clearInterval(runningTimeout);
@@ -35,6 +41,8 @@ export const useStore = defineStore("store", () => {
     }
 
     return {
+        selectedMode,
+        selectedSkills,
         problems,
         maxTime,
         currentTime,

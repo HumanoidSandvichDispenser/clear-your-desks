@@ -1,20 +1,28 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useSkillsStore } from "../store/skills";
+import { useRouter } from "vue-router";
+import { useStore } from "../store";
 
+const router = useRouter();
 
-const selectedMode = ref("practice");
-
+const store = useStore();
 const skills = useSkillsStore();
-const selectedSkills = ref<string[]>([]);
+
+//const selectedSkills = ref<string[]>([]);
 
 function toggleTopic(topic: string) {
-    let idx = selectedSkills.value.indexOf(topic);
+    let idx = store.selectedSkills.indexOf(topic);
     if (idx > -1) {
-        selectedSkills.value.splice(idx, 1);
+        store.selectedSkills.splice(idx, 1);
     } else {
-        selectedSkills.value.push(topic);
+        store.selectedSkills.push(topic);
     }
+}
+
+function start() {
+    router.push("/game");
+    store.start();
 }
 </script>
 
@@ -23,9 +31,9 @@ function toggleTopic(topic: string) {
         <button
             :class="{
                 selection: true,
-                enabled: selectedMode == 'practice'
+                enabled: store.selectedMode == 'practice'
             }"
-            @click="selectedMode = 'practice'"
+            @click="store.selectedMode = 'practice'"
         >
             Practice
             <p>Standard memory quiz practice</p>
@@ -33,9 +41,9 @@ function toggleTopic(topic: string) {
         <button
             :class="{
                 selection: true,
-                enabled: selectedMode == 'score-attack'
+                enabled: store.selectedMode == 'score-attack'
             }"
-            @click="selectedMode = 'score-attack'"
+            @click="store.selectedMode = 'score-attack'"
         >
             Score Attack
             <p>Try to get the highest score possible</p>
@@ -47,7 +55,7 @@ function toggleTopic(topic: string) {
             v-for="skill in skills.current"
             :class="{
                 selection: true,
-                enabled: selectedSkills.includes(skill.name)
+                enabled: store.selectedSkills.includes(skill.name)
             }"
             @click="toggleTopic(skill.name)"
         >
@@ -57,6 +65,7 @@ function toggleTopic(topic: string) {
             </p>
         </button>
     </div>
+    <button @click="start">Temporary start button</button>
 </template>
 
 <style>
