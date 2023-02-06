@@ -22,6 +22,7 @@ function toggleTopic(topic: string) {
     <div class="selection-buttons">
         <button
             :class="{
+                selection: true,
                 enabled: selectedMode == 'practice'
             }"
             @click="selectedMode = 'practice'"
@@ -31,6 +32,7 @@ function toggleTopic(topic: string) {
         </button>
         <button
             :class="{
+                selection: true,
                 enabled: selectedMode == 'score-attack'
             }"
             @click="selectedMode = 'score-attack'"
@@ -44,6 +46,7 @@ function toggleTopic(topic: string) {
         <button
             v-for="skill in skills.current"
             :class="{
+                selection: true,
                 enabled: selectedSkills.includes(skill.name)
             }"
             @click="toggleTopic(skill.name)"
@@ -66,29 +69,20 @@ function toggleTopic(topic: string) {
     flex-wrap: wrap;
 }
 
-.selection-buttons > button {
-    padding: 1em 2em;
-    text-align: left;
-    transition-duration: 200ms;
+.selection-buttons > button.selection {
     flex: 1;
 }
 
-.selection-buttons > button.enabled {
-    color: var(--bg0);
-    background-color: var(--fg0);
-    transition-duration: 200ms;
-}
-
-.selection-buttons > button > p {
+.selection-buttons > button.selection > p {
     margin-top: 1em;
 }
 
-.selection-buttons > button > p.subtext {
+.selection-buttons > button.selection > p.subtext {
     color: var(--fg1);
     font-size: 12px;
 }
 
-.selection-buttons > button.enabled > p.subtext {
+.selection-buttons > button.selection.enabled > p.subtext {
     color: var(--bg0);
 }
 </style>

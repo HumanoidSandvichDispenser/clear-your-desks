@@ -44,6 +44,18 @@ button {
     outline: 1px solid var(--fg0);
 }
 
+button.selection {
+    padding: 1em 2em;
+    text-align: left;
+    transition-duration: 200ms;
+}
+
+button.selection.enabled {
+    color: var(--bg0);
+    background-color: var(--fg0);
+    transition-duration: 200ms;
+}
+
 #app {
     margin: 0 auto;
     padding: 2rem;
