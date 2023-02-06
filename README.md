@@ -19,7 +19,7 @@ Improved memory quiz.
 Install dependencies
 
 ```
-npm run install
+npm install
 ```
 
 Compile and hot-reload for development
