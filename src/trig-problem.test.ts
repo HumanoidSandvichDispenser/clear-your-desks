@@ -39,4 +39,10 @@ describe("checkAnswer", () => {
         expect(TrigProblem.generateSingle("sin", "0").answer).toBe("0");
         expect(TrigProblem.generateSingle("cos", "0").answer).toBe("1");
     });
+
+    it("should handle un/rationalized denominators", () => {
+        let problem = TrigProblem.generateSingle("sin", "pi/4");
+        expect(problem.checkAnswer("sqrt(2)/2")).toBeTruthy();
+        expect(problem.checkAnswer("1/sqrt(2)")).toBeTruthy();
+    });
 });

@@ -66,7 +66,9 @@ export default class TrigProblem extends ProblemData {
         try {
             let nInput = nerdamer.convertFromLaTeX(input);
             let nQuestion = nerdamer.convertFromLaTeX(this.answer);
-            return nInput.eq(nQuestion);
+            // raise both numbers to the second power since nerdamer can not
+            // rationalize denominators by itself
+            return nInput.pow(2).eq(nQuestion.pow(2));
         } catch (err) {
             if (err instanceof Error) {
                 if (err.name == "ParseError") {
