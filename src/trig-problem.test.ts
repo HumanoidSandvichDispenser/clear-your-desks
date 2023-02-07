@@ -45,4 +45,9 @@ describe("checkAnswer", () => {
         expect(problem.checkAnswer("sqrt(2)/2")).toBeTruthy();
         expect(problem.checkAnswer("1/sqrt(2)")).toBeTruthy();
     });
+
+    it("should evaluate tan(0) correctly", () => {
+        let problem = TrigProblem.generateSingle("tan", "0");
+        expect(problem.checkAnswer("0")).toBeTruthy();
+    });
 });

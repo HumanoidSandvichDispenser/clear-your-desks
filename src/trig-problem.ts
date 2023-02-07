@@ -63,12 +63,23 @@ export default class TrigProblem extends ProblemData {
         if (this.answer.includes("undefined")) {
             return input.includes("undefined");
         }
+
         try {
             let nInput = nerdamer.convertFromLaTeX(input);
             let nQuestion = nerdamer.convertFromLaTeX(this.answer);
             // raise both numbers to the second power since nerdamer can not
             // rationalize denominators by itself
-            return nInput.pow(2).eq(nQuestion.pow(2));
+            let algebraicCheck = nInput.pow(2).eq(nQuestion.pow(2));
+            if (algebraicCheck) {
+                return true;
+            }
+
+            let evalCheck = nInput.evaluate().eq(nQuestion.evaluate());
+            if (evalCheck) {
+                return true;
+            }
+
+            return false;
         } catch (err) {
             if (err instanceof Error) {
                 if (err.name == "ParseError") {
