@@ -1,5 +1,15 @@
 export default class ProblemData {
     /**
+     * The name of the skill this problem involves.
+     */
+    static skillName: string;
+
+    /**
+     * The instuctions given to the user to complete the problem.
+     */
+    static instructions: string;
+
+    /**
      * The question of the problem in LaTeX.
      */
     question: string;
@@ -20,5 +30,10 @@ export default class ProblemData {
 
     checkAnswer(input: string): boolean {
         // TODO: implement
+        throw new Error("Not implemented.");
+    }
+
+    get instructionsStr(): string {
+        return (this.constructor as typeof ProblemData).instructions;
     }
 }

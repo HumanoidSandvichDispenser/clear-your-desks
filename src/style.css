@@ -1,7 +1,7 @@
-@import url("https://cdn.jsdelivr.net/npm/@xz/fonts@1/serve/inter.css");
+@import url("https://cdn.jsdelivr.net/npm/@xz/fonts@1/serve/hk-grotesk.min.css");
 
 :root {
-    font-family: Inter;
+    font-family: "HK Grotesk", sans-serif;
     font-size: 16px;
     line-height: 24px;
     font-weight: 400;
@@ -32,7 +32,7 @@ body {
 }
 
 button {
-    border-radius: 8px;
+    border-radius: 4px;
     border: 1px solid transparent;
     padding: 0.6em 1.2em;
     font-size: 1em;
@@ -43,6 +43,12 @@ button {
     background-color: var(--bg0);
     outline: 1px solid var(--fg0);
 }
+
+button.accent {
+    color: var(--bg0);
+    background-color: var(--fg0);
+}
+
 
 button.selection {
     padding: 1em 2em;

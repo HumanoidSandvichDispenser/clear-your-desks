@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, ref } from "vue";
+import { defineProps, ref, computed } from "vue";
 import { useStore } from "../store";
 
 const store = useStore();
@@ -14,11 +14,13 @@ const isRevealed = ref(false);
 function reveal() {
     isRevealed.value = true;
 }
+
+const questionLarge = computed(() => `\\large{${props.question}}`);
 </script>
 
 <template>
     <div>
-        <span v-katex="question">
+        <span v-katex:display="questionLarge">
         </span>
     </div>
     <div v-if="isRevealed">
@@ -29,6 +31,6 @@ function reveal() {
 
 <style scoped>
 div.question {
-
+    font-size: 32px;
 }
 </style>

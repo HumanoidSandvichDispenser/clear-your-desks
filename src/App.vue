@@ -7,7 +7,9 @@ console.log(skills.current);
 </script>
 
 <template>
-    <router-view />
+    <main class="view">
+        <router-view />
+    </main>
 </template>
 
 <style scoped>
@@ -23,5 +25,9 @@ console.log(skills.current);
 
 .logo.vue:hover {
     filter: drop-shadow(0 0 2em #42b883aa);
+}
+
+main {
+    width: 768px;
 }
 </style>

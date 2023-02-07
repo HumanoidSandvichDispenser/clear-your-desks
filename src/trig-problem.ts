@@ -23,6 +23,8 @@ export const ANGLES = [
 ];
 
 export default class TrigProblem extends ProblemData {
+    static skillName: string = "Trigonometry";
+    static instructions: string = "Evaluate the expression.";
     fn: string = "";
     args: string = "";
 
@@ -61,8 +63,17 @@ export default class TrigProblem extends ProblemData {
         if (this.answer.includes("undefined")) {
             return input.includes("undefined");
         }
-        let nInput = nerdamer(input);
-        let nQuestion = nerdamer(this.answer);
-        return nInput.eq(nQuestion);
+        try {
+            let nInput = nerdamer.convertFromLaTeX(input);
+            let nQuestion = nerdamer.convertFromLaTeX(this.answer);
+            return nInput.eq(nQuestion);
+        } catch (err) {
+            if (err instanceof Error) {
+                if (err.name == "ParseError") {
+                    return false;
+                }
+            }
+            throw err;
+        }
     }
 }

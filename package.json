@@ -13,6 +13,7 @@
   "dependencies": {
     "@hsorby/vue3-katex": "^0.6.0-rc.4",
     "katex": "^0.16.4",
+    "mathlive": "^0.87.1",
     "nerdamer": "^1.1.13",
     "pinia": "^2.0.29",
     "vue": "^3.2.45",

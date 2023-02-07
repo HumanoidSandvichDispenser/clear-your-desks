@@ -9,8 +9,13 @@ const routes: RouteRecordRaw[] = [
         component: Home,
     },
     {
-        "path": "/game",
-        name: "Game",
+        "path": "/game/score-attack",
+        name: "Score Attack",
+        component: Game,
+    },
+    {
+        "path": "/game/practice",
+        name: "Practice",
         component: Game,
     },
     /*
