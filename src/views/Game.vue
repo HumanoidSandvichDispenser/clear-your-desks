@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, reactive, ref } from "vue";
 // TODO: replace relative paths with @ root paths
 import { useStore } from "../store";
 import Problem from "../components/Problem.vue";
 import { MathfieldElement } from "mathlive";
 import ProblemData from "../problem-data";
 import GameBar from "../components/GameBar.vue";
+import router from "../router";
+import Timer from "../timer";
 
 const store = useStore();
 
@@ -15,6 +17,7 @@ onMounted(() => {
     }
 
     currentProblemIndex.value = -1;
+    timer.time = 120;
     next();
 
     if (mathfield.value) {
@@ -41,10 +44,7 @@ const score = ref(0);
 const streak = ref(0);
 
 // move to timer class
-const time = ref(120);
-const initialTime = ref(0);
-const startTime = ref(0);
-let timer: NodeJS.Timer;
+let timer = reactive(new Timer());
 
 const mathfield = ref<MathfieldElement>();
 
@@ -64,13 +64,8 @@ const isCorrect = ref(false);
 const isRevealed = ref(false);
 
 function end() {
-    throw new Error("not implemented");
-}
-
-function tick() {
-    if ((time.value -= 1) <= 0) {
-        end();
-    }
+    //throw new Error("not implemented");
+    router.push("/results")
 }
 
 function next() {
@@ -91,8 +86,7 @@ function next() {
         }
     }
 
-    timer = setInterval(tick, 1000);
-    startTime.value = new Date().getTime();
+    timer.start();
 }
 
 function keyup(event: KeyboardEvent) {
@@ -130,12 +124,11 @@ function submit() {
     isRevealed.value = true;
     mathfield.value.disabled = true;
     mathfield.value.focus();
-    clearInterval(timer);
 }
 </script>
 
 <template>
-    <game-bar :score="score" :streak="streak" :time="time" />
+    <game-bar :score="score" :streak="streak" :time="timer.time" />
     <div class="game">
         <h2>{{ currentInstructions }}</h2>
         <div>
