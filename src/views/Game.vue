@@ -5,6 +5,7 @@ import { useStore } from "../store";
 import Problem from "../components/Problem.vue";
 import { MathfieldElement } from "mathlive";
 import ProblemData from "../problem-data";
+import GameBar from "../components/GameBar.vue";
 
 const store = useStore();
 
@@ -33,8 +34,10 @@ onMounted(() => {
     }
 });
 
+const score = ref(0);
+const streak = ref(1);
+
 const mathfield = ref<MathfieldElement>();
-const submitButton = ref<HTMLButtonElement>();
 
 const currentProblemIndex = ref(0);
 const currentProblem = computed(() => {
@@ -97,38 +100,51 @@ function submit() {
 </script>
 
 <template>
-    <h2>{{ currentInstructions }}</h2>
-    <div>
-        <problem
-            v-if="currentProblem"
-            :question="currentProblem.question"
-            :answer="currentProblem.answer"
-        >
-        </problem>
-        <div class="entry">
-            <math-field class="mathfield" ref="mathfield" @keyup="keyup">
-            </math-field>
-            <button class="accent" ref="submit-button" @click="submit">
-                Submit
-            </button>
+    <game-bar :score="score" :streak="streak" />
+    <div class="game">
+        <h2>{{ currentInstructions }}</h2>
+        <div>
+            <problem
+                v-if="currentProblem"
+                :question="currentProblem.question"
+                :answer="currentProblem.answer"
+            >
+            </problem>
+            <div class="entry">
+                <math-field class="mathfield" ref="mathfield" @keyup="keyup">
+                </math-field>
+                <button class="accent" ref="submit-button" @click="submit">
+                    Submit
+                </button>
+            </div>
         </div>
-    </div>
-    <div
-        :class="{
-            'answer': true,
-            [isCorrect ? 'correct' : 'incorrect']: true,
-        }"
-        v-if="isRevealed"
-    >
-        <h2 v-if="isCorrect">You are correct</h2>
-        <h2 v-else>
-            Correct solution:
-            <span v-katex="currentProblem.answer"></span>
-        </h2>
+        <div
+            :class="{
+                'answer': true,
+                [isCorrect ? 'correct' : 'incorrect']: true,
+            }"
+            v-if="isRevealed"
+        >
+            <h2 v-if="isCorrect">You are correct</h2>
+            <h2 v-else>
+                Correct solution:
+                <span v-katex="currentProblem.answer"></span>
+            </h2>
+        </div>
     </div>
 </template>
 
 <style scoped>
+.game {
+    box-shadow: 1px 1px 8px #00000055;
+    padding: 4em;
+}
+
+.game span.katex-display,
+.game span.katex-display > .katex {
+    text-align: left;
+}
+
 @keyframes shake {
     0% {
         transform: translateX(-10%);

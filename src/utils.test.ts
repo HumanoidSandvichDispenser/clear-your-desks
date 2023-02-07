@@ -1,5 +1,6 @@
 import { assert, describe, expect, it } from "vitest";
 import { pickFrom, pickNFrom, random, range } from "./utils";
+import nerdamer from "nerdamer";
 
 describe("pickFrom methods", () => {
     it("should return unique values", () => {
@@ -45,3 +46,11 @@ describe("range method", () => {
         expect(range(1, 5, 2)).toEqual([1, 3]);
     });
 });
+
+describe("nerdamer", () => {
+    it("should have equivalent rational denominator things", () => {
+        let a = nerdamer("sqrt(3)/2");
+        let b = nerdamer("3/(sqrt(3) * 2)");
+        console.log(a.pow(2).eq(b.pow(2)));
+    });
+});;
