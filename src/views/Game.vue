@@ -14,6 +14,9 @@ onMounted(() => {
         store.generateProblems();
     }
 
+    currentProblemIndex.value = -1;
+    next();
+
     if (mathfield.value) {
         mathfield.value.setOptions({
             inlineShortcuts: {
@@ -35,7 +38,13 @@ onMounted(() => {
 });
 
 const score = ref(0);
-const streak = ref(1);
+const streak = ref(0);
+
+// move to timer class
+const time = ref(120);
+const initialTime = ref(0);
+const startTime = ref(0);
+let timer: NodeJS.Timer;
 
 const mathfield = ref<MathfieldElement>();
 
@@ -54,6 +63,16 @@ const currentInstructions = computed(() => {
 const isCorrect = ref(false);
 const isRevealed = ref(false);
 
+function end() {
+    throw new Error("not implemented");
+}
+
+function tick() {
+    if ((time.value -= 1) <= 0) {
+        end();
+    }
+}
+
 function next() {
     if (!mathfield.value) {
         return;
@@ -64,25 +83,39 @@ function next() {
     mathfield.value.value = "";
 
     if (currentProblemIndex.value >= store.problems.length) {
-        throw new Error("not implemented");
+        end();
     } else {
         mathfield.value.disabled = false;
         if (!mathfield.value.hasFocus()) {
             mathfield.value.focus();
         }
     }
+
+    timer = setInterval(tick, 1000);
+    startTime.value = new Date().getTime();
 }
 
 function keyup(event: KeyboardEvent) {
     if (event.key == "Enter") {
         if (event.target == mathfield.value) {
+
             if (isRevealed.value) {
                 next();
-            } else {
+            } else if (mathfield.value.value.trim() != "") {
+                // if not empty, submit
                 submit();
             }
         }
     }
+}
+
+function onCorrect() {
+    score.value += 100 + (streak.value * 10);
+    streak.value++;
+}
+
+function onIncorrect() {
+    streak.value = 0;
 }
 
 function submit() {
@@ -93,14 +126,16 @@ function submit() {
     const problem = currentProblem.value;
     const input = mathfield.value.value;
     isCorrect.value = problem.checkAnswer(input);
+    isCorrect.value ? onCorrect() : onIncorrect();
     isRevealed.value = true;
     mathfield.value.disabled = true;
     mathfield.value.focus();
+    clearInterval(timer);
 }
 </script>
 
 <template>
-    <game-bar :score="score" :streak="streak" />
+    <game-bar :score="score" :streak="streak" :time="time" />
     <div class="game">
         <h2>{{ currentInstructions }}</h2>
         <div>

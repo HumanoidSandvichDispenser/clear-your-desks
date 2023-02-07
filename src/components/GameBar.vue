@@ -5,6 +5,7 @@ import router from "../router";
 const props = defineProps({
     score: Number,
     streak: Number,
+    time: Number,
 });
 
 function exit() {
@@ -25,6 +26,15 @@ function exit() {
             </div>
         </div>
         <div class="right">
+            <div
+                :class="{
+                    timer: true,
+                    alert: time < 30,
+                }"
+            >
+                <bootstrap-icon icon="stopwatch" />
+                {{ Math.floor(time) }}
+            </div>
             <div
                 :class="{
                     streak: true,
@@ -58,6 +68,8 @@ function exit() {
 }
 
 .game-bar > div.right {
+    display: flex;
+    column-gap: 8px;
     justify-content: right;
 }
 
@@ -66,7 +78,19 @@ function exit() {
     text-align: left;
 }
 
+.streak {
+    color: var(--fg2);
+}
+
 .streak.active {
+    color: var(--red);
+}
+
+.timer {
+    color: var(--fg2);
+}
+
+.timer.alert {
     color: var(--red);
 }
 </style>
