@@ -53,6 +53,7 @@ export default class ProblemData {
 
         if (dt > this.recallTime) {
             penalty += (dt - this.recallTime) * 4;
+            console.log(dt);
         }
 
         // if our time is less than the recall time, we start penalizing a few

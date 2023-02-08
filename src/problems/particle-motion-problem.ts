@@ -21,9 +21,6 @@ export default class ParticleMotionProblem extends ProblemData {
         return 5;
     }
 
-    fn: string = "";
-    args: string = "";
-
     constructor(question: string, answer: string) {
         super(question, answer);
     }
