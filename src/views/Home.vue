@@ -80,16 +80,6 @@ function start() {
     flex-wrap: wrap;
 }
 
-button.selection {
-    transition-duration: 200ms;
-}
-
-button.selection:hover {
-    background-color: var(--fg0);
-    color: var(--bg0);
-    transition-duration: 200ms;
-}
-
 .selection-buttons > button.selection {
     flex: 1;
 }
@@ -106,9 +96,10 @@ button.selection:hover {
 .selection-buttons > button.selection.enabled > p.subtext {
     color: var(--bg0);
 }
+
 .start-button {
     color: var(--bg0);
-    box-shadow: 0 9px var(--dgreen);
+    box-shadow: 0 8px var(--dgreen);
     background-color: var(--green);
     outline: none;
     width: 250px;
@@ -123,9 +114,8 @@ button.selection:hover {
 .start-button:active {
     transform: translateY(4px);
     transition-duration: 200ms;
-    box-shadow: 0 5px var(--dgreen);
+    box-shadow: 0 4px var(--dgreen);
 }
-
 
 .start-button:hover {
     background-color: var(--lgreen);

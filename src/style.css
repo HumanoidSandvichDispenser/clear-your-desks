@@ -22,6 +22,7 @@
     --green: #8ac926;
     --dgreen: #32ac42;
     --blue: #1982c4;
+    --lblue: #a8d4f0;
     --purple: #6a4c93;
 }
 
@@ -54,6 +55,12 @@ button.accent {
 button.selection {
     padding: 1em 2em;
     text-align: left;
+    transition-duration: 200ms;
+}
+
+button.selection:hover {
+    background-color: var(--bg1);
+    /*color: var(--blue);*/
     transition-duration: 200ms;
 }
 
