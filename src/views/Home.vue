@@ -22,7 +22,6 @@ function toggleTopic(topic: string) {
 
 function start() {
     router.push("/game/" + store.selectedMode);
-    //store.start();
 }
 </script>
 

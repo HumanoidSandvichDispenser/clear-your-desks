@@ -57,14 +57,6 @@ const currentProblemIndex = ref(0);
 const currentProblem = computed(() => {
     return store.problems[currentProblemIndex.value];
 });
-const currentInstructions = computed(() => {
-    if (currentProblem.value) {
-        let problem = currentProblem.value.constructor as typeof ProblemData;
-        return problem.instructions;
-    }
-    return "";
-});
-
 const isCorrect = ref(false);
 const isRevealed = ref(false);
 
@@ -94,7 +86,6 @@ function next() {
 }
 
 function keyup(event: KeyboardEvent) {
-    console.log(mathfield.value.value);
     if (event.key == "Enter") {
         if (event.target == mathfield.value) {
             if (isRevealed.value) {
@@ -137,7 +128,7 @@ function submit() {
     <div>
         <game-bar :score="score" :streak="streak" :time="timer.time" />
         <div class="game">
-            <h2>{{ currentInstructions }}</h2>
+            <h2 v-if="currentProblem">{{ currentProblem.instruction }}</h2>
             <div>
                 <problem
                     v-if="currentProblem"
