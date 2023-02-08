@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
+import ParticleMotionProblem from "../particle-motion-problem";
 import ProblemData from "../problem-data";
 import TrigProblem from "../trig-problem";
 
@@ -11,7 +12,7 @@ export const useStore = defineStore("store", () => {
     const problems  = ref<ProblemData[]>([]);
 
     function generateProblems() {
-        problems.value = TrigProblem.generate(10) ?? [];
+        problems.value = ParticleMotionProblem.generate(10) ?? [];
     }
 
     return {

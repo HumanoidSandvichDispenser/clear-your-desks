@@ -8,7 +8,11 @@ console.log(skills.current);
 
 <template>
     <main class="view">
-        <router-view />
+        <router-view v-slot="{ Component }">
+            <transition name="fade" mode="out-in">
+                <component :is="Component" />
+            </transition>
+        </router-view>
     </main>
 </template>
 
@@ -29,5 +33,19 @@ console.log(skills.current);
 
 main {
     width: 768px;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: 200ms ease all;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+.fade-enter-to {
+    opacity: 1;
 }
 </style>

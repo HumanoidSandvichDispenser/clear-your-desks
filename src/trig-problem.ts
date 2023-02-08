@@ -23,8 +23,18 @@ export const ANGLES = [
 ];
 
 export default class TrigProblem extends ProblemData {
-    static skillName: string = "Trigonometry";
-    static instructions: string = "Evaluate the expression.";
+    get skillName() {
+        return "Trigonometry";
+    }
+
+    get instruction() {
+        return "Evaluate the expression.";
+    }
+
+    get recallTime() {
+        return 5;
+    }
+
     fn: string = "";
     args: string = "";
 

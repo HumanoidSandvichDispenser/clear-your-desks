@@ -26,7 +26,7 @@ export default class Timer {
      * stopped.
      */
     public stop(): number {
-        window.clearTimeout(this.timer);
+        window.clearInterval(this.timer);
         this.timer = -1;
         let dt = (new Date().getTime() - this.startTime) / 1000;
         this.time = this.initialTime - dt;

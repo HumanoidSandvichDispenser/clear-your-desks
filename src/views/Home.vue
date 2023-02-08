@@ -27,45 +27,47 @@ function start() {
 </script>
 
 <template>
-    <div class="selection-buttons">
-        <button
-            :class="{
-                selection: true,
-                enabled: store.selectedMode == 'practice'
-            }"
-            @click="store.selectedMode = 'practice'"
-        >
-            Practice
-            <p>Standard memory quiz practice</p>
-        </button>
-        <button
-            :class="{
-                selection: true,
-                enabled: store.selectedMode == 'score-attack'
-            }"
-            @click="store.selectedMode = 'score-attack'"
-        >
-            Score Attack
-            <p>Try to get the highest score possible</p>
-        </button>
+    <div>
+        <div class="selection-buttons">
+            <button
+                :class="{
+                    selection: true,
+                    enabled: store.selectedMode == 'practice'
+                }"
+                @click="store.selectedMode = 'practice'"
+            >
+                Practice
+                <p>Standard memory quiz practice</p>
+            </button>
+            <button
+                :class="{
+                    selection: true,
+                    enabled: store.selectedMode == 'score-attack'
+                }"
+                @click="store.selectedMode = 'score-attack'"
+            >
+                Score Attack
+                <p>Try to get the highest score possible</p>
+            </button>
+        </div>
+        <hr>
+        <div class="selection-buttons">
+            <button
+                v-for="skill in skills.current"
+                :class="{
+                    selection: true,
+                    enabled: store.selectedSkills.includes(skill.name)
+                }"
+                @click="toggleTopic(skill.name)"
+            >
+                {{ skill.name }}
+                <p class="subtext">
+                    {{ skill.retentionPercentage }}
+                </p>
+            </button>
+        </div>
+        <button @click="start">Temporary start button</button>
     </div>
-    <hr>
-    <div class="selection-buttons">
-        <button
-            v-for="skill in skills.current"
-            :class="{
-                selection: true,
-                enabled: store.selectedSkills.includes(skill.name)
-            }"
-            @click="toggleTopic(skill.name)"
-        >
-            {{ skill.name }}
-            <p class="subtext">
-                {{ skill.retentionPercentage }}
-            </p>
-        </button>
-    </div>
-    <button @click="start">Temporary start button</button>
 </template>
 
 <style>

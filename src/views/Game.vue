@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref } from "vue";
+import { computed, onMounted, reactive, ref, watch } from "vue";
 // TODO: replace relative paths with @ root paths
 import { useStore } from "../store";
 import Problem from "../components/Problem.vue";
@@ -43,8 +43,13 @@ onMounted(() => {
 const score = ref(0);
 const streak = ref(0);
 
-// move to timer class
 let timer = reactive(new Timer());
+
+watch(timer, () => {
+    if (timer.time <= 0) {
+        end();
+    }
+});
 
 const mathfield = ref<MathfieldElement>();
 
@@ -64,8 +69,7 @@ const isCorrect = ref(false);
 const isRevealed = ref(false);
 
 function end() {
-    //throw new Error("not implemented");
-    router.push("/results")
+    router.push("/results");
 }
 
 function next() {
@@ -90,9 +94,9 @@ function next() {
 }
 
 function keyup(event: KeyboardEvent) {
+    console.log(mathfield.value.value);
     if (event.key == "Enter") {
         if (event.target == mathfield.value) {
-
             if (isRevealed.value) {
                 next();
             } else if (mathfield.value.value.trim() != "") {
@@ -103,8 +107,9 @@ function keyup(event: KeyboardEvent) {
     }
 }
 
-function onCorrect() {
-    score.value += 100 + (streak.value * 10);
+function onCorrect(dt: number) {
+    score.value = Math.round(currentProblem.value.calculateScore(dt));
+    score.value += 10 * streak.value;
     streak.value++;
 }
 
@@ -119,8 +124,9 @@ function submit() {
 
     const problem = currentProblem.value;
     const input = mathfield.value.value;
+    let dt = timer.stop();
     isCorrect.value = problem.checkAnswer(input);
-    isCorrect.value ? onCorrect() : onIncorrect();
+    isCorrect.value ? onCorrect(dt) : onIncorrect();
     isRevealed.value = true;
     mathfield.value.disabled = true;
     mathfield.value.focus();
@@ -128,36 +134,38 @@ function submit() {
 </script>
 
 <template>
-    <game-bar :score="score" :streak="streak" :time="timer.time" />
-    <div class="game">
-        <h2>{{ currentInstructions }}</h2>
-        <div>
-            <problem
-                v-if="currentProblem"
-                :question="currentProblem.question"
-                :answer="currentProblem.answer"
-            >
-            </problem>
-            <div class="entry">
-                <math-field class="mathfield" ref="mathfield" @keyup="keyup">
-                </math-field>
-                <button class="accent" ref="submit-button" @click="submit">
-                    Submit
-                </button>
+    <div>
+        <game-bar :score="score" :streak="streak" :time="timer.time" />
+        <div class="game">
+            <h2>{{ currentInstructions }}</h2>
+            <div>
+                <problem
+                    v-if="currentProblem"
+                    :question="currentProblem.question"
+                    :answer="currentProblem.answer"
+                >
+                </problem>
+                <div class="entry">
+                    <math-field class="mathfield" ref="mathfield" @keyup="keyup">
+                    </math-field>
+                    <button class="accent" ref="submit-button" @click="submit">
+                        Submit
+                    </button>
+                </div>
             </div>
-        </div>
-        <div
-            :class="{
-                'answer': true,
-                [isCorrect ? 'correct' : 'incorrect']: true,
-            }"
-            v-if="isRevealed"
-        >
-            <h2 v-if="isCorrect">You are correct</h2>
-            <h2 v-else>
-                Correct solution:
-                <span v-katex="currentProblem.answer"></span>
-            </h2>
+            <div
+                :class="{
+                    'answer': true,
+                    [isCorrect ? 'correct' : 'incorrect']: true,
+                }"
+                v-if="isRevealed"
+            >
+                <h2 v-if="isCorrect">You are correct</h2>
+                <h2 v-else>
+                    Correct solution:
+                    <span v-katex="currentProblem.answer"></span>
+                </h2>
+            </div>
         </div>
     </div>
 </template>
@@ -173,45 +181,8 @@ function submit() {
     text-align: left;
 }
 
-@keyframes shake {
-    0% {
-        transform: translateX(-10%);
-    }
-    10% {
-        transform: translateX(10%);
-    }
-    20% {
-        transform: translateX(-10%);
-    }
-    30% {
-        transform: translateX(10%);
-    }
-    40% {
-        transform: translateX(-10%);
-    }
-    50% {
-        transform: translateX(10%);
-    }
-    60% {
-        transform: translateX(-8%);
-    }
-    70% {
-        transform: translateX(6%);
-    }
-    80% {
-        transform: translateX(-4%);
-    }
-    90% {
-        transform: translateX(2%);
-    }
-    100% {
-        transform: translateX(0%);
-    }
-}
-
 .answer {
     width: 100%;
-    /*outline: 2px solid;*/
     color: white;
     padding: 1.2em;
     border-radius: 4px;
@@ -219,7 +190,6 @@ function submit() {
     box-sizing: border-box;
     font-weight: 500;
     font-size: 20px;
-    /*animation: 0.5 ease-in-out 0s infinite shake;*/
 }
 
 .answer.correct {
