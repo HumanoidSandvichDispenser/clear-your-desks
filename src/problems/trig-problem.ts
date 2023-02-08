@@ -1,6 +1,6 @@
 import ProblemData from "./problem-data";
-import { pickFrom, pickNFrom, random, range } from "./utils";
-import nerdamer, { diff } from "nerdamer";
+import { pickFrom, pickNFrom, } from "../utils";
+import nerdamer from "nerdamer";
 import "nerdamer/Algebra.js";
 
 export const ANGLES = [

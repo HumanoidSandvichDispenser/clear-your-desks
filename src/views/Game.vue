@@ -4,7 +4,7 @@ import { computed, onMounted, reactive, ref, watch } from "vue";
 import { useStore } from "../store";
 import Problem from "../components/Problem.vue";
 import { MathfieldElement } from "mathlive";
-import ProblemData from "../problem-data";
+import ProblemData from "../problems/problem-data";
 import GameBar from "../components/GameBar.vue";
 import router from "../router";
 import Timer from "../timer";

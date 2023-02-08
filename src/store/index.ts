@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
-import ParticleMotionProblem from "../particle-motion-problem";
-import ProblemData from "../problem-data";
-import TrigProblem from "../trig-problem";
+import ParticleMotionProblem from "../problems/particle-motion-problem";
+import ProblemData from "../problems/problem-data";
+import TrigProblem from "../problems/trig-problem";
 
 export const useStore = defineStore("store", () => {
     const selectedMode = ref("practice");
