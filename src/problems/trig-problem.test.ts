@@ -50,4 +50,9 @@ describe("checkAnswer", () => {
         let problem = TrigProblem.generateSingle("tan", "0");
         expect(problem.checkAnswer("0")).toBeTruthy();
     });
+
+    it("should evaluate csc(0) correctly", () => {
+        let problem = TrigProblem.generateSingle("csc", "0");
+        expect(problem.checkAnswer("undefined")).toBeTruthy();
+    });
 });

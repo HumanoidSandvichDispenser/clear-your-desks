@@ -32,15 +32,16 @@ export default class TrigProblem extends ProblemData {
     }
 
     get recallTime() {
-        return 5;
+        return 8;
     }
 
     fn: string = "";
-    args: string = "";
+    angle: string = "";
 
-    constructor(question: string, answer: string, fn: string) {
+    constructor(question: string, answer: string, fn: string, angle: string) {
         super(question, answer);
         this.fn = fn;
+        this.angle = angle;
     }
 
     static generate(count: number): ProblemData[] | undefined {
@@ -56,13 +57,26 @@ export default class TrigProblem extends ProblemData {
 
     static generateSingle(fn: string, angle: string) {
         let tex = `\\${fn}(${angle})`;
+        if (fn == "csc" && angle == "0") {
+            return new TrigProblem(
+                tex,
+                "\\textrm{undefined}",
+                fn,
+                angle
+            )
+        }
         try {
             let expr = nerdamer.convertFromLaTeX(tex);
-            return new TrigProblem(tex, expr.toTeX(), fn);
+            return new TrigProblem(tex, expr.toTeX(), fn, angle);
         } catch (err) {
             if (err instanceof Error) {
                 if (err.message.includes(" is undefined for ")) {
-                    return new TrigProblem(tex, "\\textrm{undefined}", fn);
+                    return new TrigProblem(
+                        tex,
+                        "\\textrm{undefined}",
+                        fn,
+                        angle
+                    );
                 }
             }
             throw err;
