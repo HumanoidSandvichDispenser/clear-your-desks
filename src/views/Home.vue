@@ -26,7 +26,7 @@ function start() {
 </script>
 
 <template>
-    <div>
+    <div class="home">
         <div class="selection-buttons">
             <button
                 :class="{
@@ -69,12 +69,16 @@ function start() {
     </div>
 </template>
 
-<style>
+<style scoped>
+.home {
+    max-width: 768px;
+    margin: auto;
+}
+
 .selection-buttons {
     display: flex;
     column-gap: 16px;
     row-gap: 16px;
-    max-width: 768px;
     column-count: 3;
     flex-wrap: wrap;
 }
@@ -94,30 +98,5 @@ function start() {
 
 .selection-buttons > button.selection.enabled > p.subtext {
     color: var(--bg0);
-}
-
-.start-button {
-    color: var(--bg0);
-    box-shadow: 0 8px var(--dgreen);
-    background-color: var(--green);
-    outline: none;
-    width: 250px;
-    margin-top: 16px;
-    transition-duration: 200ms;
-}
-
-.start-button:hover {
-    background-color: var(--fg0);
-}
-
-.start-button:active {
-    transform: translateY(4px);
-    transition-duration: 200ms;
-    box-shadow: 0 4px var(--dgreen);
-}
-
-.start-button:hover {
-    background-color: var(--lgreen);
-    transition-duration: 200ms;
 }
 </style>

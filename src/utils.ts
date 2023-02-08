@@ -63,3 +63,14 @@ export function range(a: number, b: number, step: number = 1): number[] {
 
     return ret;
 }
+
+export function shuffle<T>(array: Array<T>) {
+    for (let i = array.length; i >= 0; i--) {
+        let randomIdx = random(0, array.length - 1);
+        let buf = array[i];
+        array[i] = array[randomIdx];
+        array[randomIdx] = array[i];
+    }
+
+    return array;
+}

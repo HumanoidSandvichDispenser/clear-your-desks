@@ -32,7 +32,7 @@ console.log(skills.current);
 }
 
 main {
-    width: 768px;
+    width: 1024px;
 }
 
 .fade-enter-active,

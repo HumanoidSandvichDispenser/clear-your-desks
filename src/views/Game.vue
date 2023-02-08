@@ -40,7 +40,10 @@ onMounted(() => {
     }
 });
 
-const score = ref(0);
+const score = computed({
+    get: (): number => store.score,
+    set: (value: number) => store.score = value,
+});
 const streak = ref(0);
 
 let timer = reactive(new Timer());
@@ -88,18 +91,24 @@ function next() {
 function keyup(event: KeyboardEvent) {
     if (event.key == "Enter") {
         if (event.target == mathfield.value) {
-            if (isRevealed.value) {
-                next();
-            } else if (mathfield.value.value.trim() != "") {
-                // if not empty, submit
-                submit();
-            }
+            continueGame();
         }
+    }
+}
+
+function continueGame() {
+    if (isRevealed.value) {
+        next();
+    } else if (mathfield.value.value.trim() != "") {
+        // if not empty, submit
+        submit();
     }
 }
 
 function onCorrect(dt: number) {
     score.value = Math.round(currentProblem.value.calculateScore(dt));
+    // score with penalty can not be less than 50
+    score.value = Math.max(score.value, 50);
     score.value += 10 * streak.value;
     streak.value++;
 }
@@ -119,6 +128,8 @@ function submit() {
     isCorrect.value = problem.checkAnswer(input);
     isCorrect.value ? onCorrect(dt) : onIncorrect();
     isRevealed.value = true;
+
+    store.responses.push({ submission: input, isCorrect: isCorrect.value });
     mathfield.value.disabled = true;
     mathfield.value.focus();
 }
@@ -139,8 +150,17 @@ function submit() {
                 <div class="entry">
                     <math-field class="mathfield" ref="mathfield" @keyup="keyup">
                     </math-field>
-                    <button class="accent" ref="submit-button" @click="submit">
-                        Submit
+                    <button
+                        class="accent"
+                        ref="submit-button"
+                        @click="continueGame"
+                    >
+                        <span v-if="isRevealed">
+                            Continue
+                        </span>
+                        <span v-else>
+                            Submit
+                        </span>
                     </button>
                 </div>
             </div>

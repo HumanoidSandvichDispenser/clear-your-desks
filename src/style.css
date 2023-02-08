@@ -13,12 +13,14 @@
     --fg1: #4e4e52;
     --fg2: #8d8c93;
     --bg0: #fff;
-    --bg1: #ddd;
-    --bg2: #bbb;
+    --bg1: #eee;
+    --bg2: #ddd;
 
+    --transparent-red: #ff595e44;
     --red: #ff595e;
     --yellow: #ffca3a;
     --lgreen: #b3e75f;
+    --transparent-green: #8ac92644;
     --green: #8ac926;
     --dgreen: #32ac42;
     --blue: #1982c4;
@@ -46,11 +48,38 @@ button {
     outline: 1px solid var(--fg0);
 }
 
+/*
 button.accent {
     color: var(--bg0);
     background-color: var(--fg0);
 }
+*/
 
+button.start-button {
+    color: var(--bg0);
+    box-shadow: 0 8px var(--dgreen);
+    background-color: var(--green);
+    outline: none;
+    width: 250px;
+    margin-top: 16px;
+    transition-duration: 200ms;
+    text-transform: uppercase;
+}
+
+button.start-button:hover {
+    background-color: var(--fg0);
+}
+
+button.start-button:active {
+    transform: translateY(4px);
+    transition-duration: 200ms;
+    box-shadow: 0 4px var(--dgreen);
+}
+
+button.start-button:hover {
+    background-color: var(--lgreen);
+    transition-duration: 200ms;
+}
 
 button.selection {
     padding: 1em 2em;
