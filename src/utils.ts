@@ -69,7 +69,7 @@ export function shuffle<T>(array: Array<T>) {
         let randomIdx = random(0, array.length - 1);
         let buf = array[i];
         array[i] = array[randomIdx];
-        array[randomIdx] = array[i];
+        array[randomIdx] = buf;
     }
 
     return array;
