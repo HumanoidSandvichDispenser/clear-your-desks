@@ -12,7 +12,7 @@ export const useSkillsStore = defineStore("skills", () => {
         new Skill("Differential Equations", 0),
         new Skill("Integration", 0),
         new Skill("Geometry", 0),
-        new Skill("Physics", 0),
+        new Skill("Particle Motion", 0),
         new Skill("Parametrics & Polars", 0),
     ];
 

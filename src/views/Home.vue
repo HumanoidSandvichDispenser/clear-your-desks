@@ -65,7 +65,7 @@ function start() {
             </p>
         </button>
     </div>
-    <button @click="start">Temporary start button</button>
+    <button class="start-button" @click="start">START</button>
 </template>
 
 <style>
@@ -76,6 +76,16 @@ function start() {
     max-width: 768px;
     column-count: 3;
     flex-wrap: wrap;
+}
+
+button.selection {
+    transition-duration: 200ms;
+}
+
+button.selection:hover {
+    background-color: var(--fg0);
+    color: var(--bg0);
+    transition-duration: 200ms;
 }
 
 .selection-buttons > button.selection {
@@ -93,5 +103,30 @@ function start() {
 
 .selection-buttons > button.selection.enabled > p.subtext {
     color: var(--bg0);
+}
+.start-button {
+    color: var(--bg0);
+    box-shadow: 0 9px var(--dgreen);
+    background-color: var(--green);
+    outline: none;
+    width: 250px;
+    margin-top: 16px;
+    transition-duration: 200ms;
+}
+
+.start-button:hover {
+    background-color: var(--fg0);
+}
+
+.start-button:active {
+    transform: translateY(4px);
+    transition-duration: 200ms;
+    box-shadow: 0 5px var(--dgreen);
+}
+
+
+.start-button:hover {
+    background-color: var(--lgreen);
+    transition-duration: 200ms;
 }
 </style>
