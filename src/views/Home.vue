@@ -36,7 +36,7 @@ function start() {
                 }"
                 @click="store.selectedMode = 'practice'"
             >
-                Practice
+                Zen Mode
                 <p>Standard memory quiz practice</p>
             </button>
             <button
