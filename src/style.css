@@ -18,7 +18,9 @@
 
     --red: #ff595e;
     --yellow: #ffca3a;
+    --lgreen: #b3e75f;
     --green: #8ac926;
+    --dgreen: #32ac42;
     --blue: #1982c4;
     --purple: #6a4c93;
 }
@@ -39,7 +41,6 @@ button {
     font-weight: 600;
     font-family: inherit;
     cursor: pointer;
-    transition: border-color 0.25s;
     background-color: var(--bg0);
     outline: 1px solid var(--fg0);
 }
