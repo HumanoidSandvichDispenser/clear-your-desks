@@ -63,6 +63,12 @@ button.selection.enabled {
     transition-duration: 200ms;
 }
 
+button.icon {
+    background: transparent;
+    padding: 0.6em;
+    outline: none;
+}
+
 #app {
     margin: 0 auto;
     padding: 2rem;
