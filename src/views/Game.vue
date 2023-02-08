@@ -11,35 +11,6 @@ import Timer from "../timer";
 
 const store = useStore();
 
-onMounted(() => {
-    if (store.problems.length == 0) {
-        store.generateProblems();
-    }
-
-    currentProblemIndex.value = -1;
-    timer.time = 120;
-    next();
-
-    if (mathfield.value) {
-        mathfield.value.setOptions({
-            inlineShortcuts: {
-                "pi": "\\pi",
-                "sqrt": "\\sqrt",
-                "infty": "\\infty",
-                "int": "\\int",
-                "undefined": "\\textrm{undefined}",
-                "DNE": "\\textrm{DNE}",
-                "sin": "\\sin",
-                "cos": "\\cos",
-                "tan": "\\tan",
-                "csc": "\\csc",
-                "sec": "\\sec",
-                "cot": "\\cot",
-            },
-        });
-    }
-});
-
 const score = computed({
     get: (): number => store.score,
     set: (value: number) => store.score = value,
@@ -99,7 +70,7 @@ function keyup(event: KeyboardEvent) {
 function continueGame() {
     if (isRevealed.value) {
         next();
-    } else if (mathfield.value.value.trim() != "") {
+    } else if (mathfield.value?.value.trim() != "") {
         // if not empty, submit
         submit();
     }
@@ -133,11 +104,49 @@ function submit() {
     mathfield.value.disabled = true;
     mathfield.value.focus();
 }
+
+let isInitialized = false;
+
+function init() {
+    store.generateProblems();
+
+    currentProblemIndex.value = -1;
+    timer.time = 120;
+    next();
+
+    if (mathfield.value) {
+        mathfield.value.setOptions({
+            inlineShortcuts: {
+                "pi": "\\pi",
+                "sqrt": "\\sqrt",
+                "infty": "\\infty",
+                "int": "\\int",
+                "undefined": "\\textrm{undefined}",
+                "DNE": "\\textrm{DNE}",
+                "sin": "\\sin",
+                "cos": "\\cos",
+                "tan": "\\tan",
+                "csc": "\\csc",
+                "sec": "\\sec",
+                "cot": "\\cot",
+            },
+        });
+    }
+
+    isInitialized = true;
+};
+
+onMounted(() => init());
+
+if (!isInitialized) {
+    init();
+}
 </script>
 
 <template>
     <div>
         <game-bar :score="score" :streak="streak" :time="timer.time" />
+        index {{ currentProblemIndex }}
         <div class="game">
             <h2 v-if="currentProblem">{{ currentProblem.instruction }}</h2>
             <div>
