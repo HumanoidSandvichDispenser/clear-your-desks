@@ -79,13 +79,13 @@ function start() {
 }
 
 button.selection {
-    transition-duration: 350ms;
+    transition-duration: 200ms;
 }
 
 button.selection:hover {
     background-color: var(--fg0);
     color: var(--bg0);
-    transition-duration: 350ms;
+    transition-duration: 200ms;
 }
 
 .selection-buttons > button.selection {
@@ -111,7 +111,7 @@ button.selection:hover {
     outline: none;
     width: 250px;
     margin-top: 16px;
-    transition-duration: 250ms;
+    transition-duration: 200ms;
 }
 
 .start-button:hover {
@@ -120,7 +120,7 @@ button.selection:hover {
 
 .start-button:active {
     transform: translateY(4px);
-    transition-duration: 250ms;
+    transition-duration: 200ms;
     box-shadow: 0 5px var(--dgreen);
 }
 
