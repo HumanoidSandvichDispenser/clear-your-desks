@@ -5,14 +5,18 @@ describe("predictRetentionDecay method", () => {
     it("should correctly predict the retention decay", () => {
         const skill = new Skill("", 1);
         skill.k = 1;
-        let y = skill.predictRetentionDecay(skill.lastRetainTime + 1);
+        let hours = 1;
+        let ms = 24 * 3600 * 1000;
+        let y = skill.predictRetentionDecay(skill.lastRetainTime + ms);
         expect(y).toBeCloseTo(0.368, 2);
     });
 
     it("should correctly predict the retention decay", () => {
         const skill = new Skill("", 1);
         skill.k = 2;
-        let y = skill.predictRetentionDecay(skill.lastRetainTime + 4);
+        let hours = 4;
+        let ms = 24 * 3600 * 1000;
+        let y = skill.predictRetentionDecay(skill.lastRetainTime + ms);
         expect(y).toBeCloseTo(0.000335, 6);
     });
 });

@@ -2,45 +2,21 @@
 import { computed, onMounted, reactive, ref, watch } from "vue";
 // TODO: replace relative paths with @ root paths
 import { useStore } from "../store";
+import { useSkillsStore } from "../store/skills";
 import Problem from "../components/Problem.vue";
 import { MathfieldElement } from "mathlive";
-import ProblemData from "../problem-data";
+import ProblemData from "../problems/problem-data";
 import GameBar from "../components/GameBar.vue";
 import router from "../router";
 import Timer from "../timer";
 
 const store = useStore();
+const skills = useSkillsStore();
 
-onMounted(() => {
-    if (store.problems.length == 0) {
-        store.generateProblems();
-    }
-
-    currentProblemIndex.value = -1;
-    timer.time = 120;
-    next();
-
-    if (mathfield.value) {
-        mathfield.value.setOptions({
-            inlineShortcuts: {
-                "pi": "\\pi",
-                "sqrt": "\\sqrt",
-                "infty": "\\infty",
-                "int": "\\int",
-                "undefined": "\\textrm{undefined}",
-                "DNE": "\\textrm{DNE}",
-                "sin": "\\sin",
-                "cos": "\\cos",
-                "tan": "\\tan",
-                "csc": "\\csc",
-                "sec": "\\sec",
-                "cot": "\\cot",
-            },
-        });
-    }
+const score = computed({
+    get: (): number => store.score,
+    set: (value: number) => store.score = value,
 });
-
-const score = ref(0);
 const streak = ref(0);
 
 let timer = reactive(new Timer());
@@ -57,18 +33,11 @@ const currentProblemIndex = ref(0);
 const currentProblem = computed(() => {
     return store.problems[currentProblemIndex.value];
 });
-const currentInstructions = computed(() => {
-    if (currentProblem.value) {
-        let problem = currentProblem.value.constructor as typeof ProblemData;
-        return problem.instructions;
-    }
-    return "";
-});
-
 const isCorrect = ref(false);
 const isRevealed = ref(false);
 
 function end() {
+    skills.writeToLocalStorage();
     router.push("/results");
 }
 
@@ -94,22 +63,27 @@ function next() {
 }
 
 function keyup(event: KeyboardEvent) {
-    console.log(mathfield.value.value);
     if (event.key == "Enter") {
         if (event.target == mathfield.value) {
-            if (isRevealed.value) {
-                next();
-            } else if (mathfield.value.value.trim() != "") {
-                // if not empty, submit
-                submit();
-            }
+            continueGame();
         }
     }
 }
 
+function continueGame() {
+    if (isRevealed.value) {
+        next();
+    } else if (mathfield.value?.value.trim() != "") {
+        // if not empty, submit
+        submit();
+    }
+}
+
 function onCorrect(dt: number) {
-    score.value = Math.round(currentProblem.value.calculateScore(dt));
-    score.value += 10 * streak.value;
+    let reward = Math.round(currentProblem.value.calculateScore(dt));
+
+    reward = Math.max(reward, 10);
+    score.value += reward + (10 * streak.value);
     streak.value++;
 }
 
@@ -128,16 +102,75 @@ function submit() {
     isCorrect.value = problem.checkAnswer(input);
     isCorrect.value ? onCorrect(dt) : onIncorrect();
     isRevealed.value = true;
+
+    // negative rating when answering too slow, positive for too fast.
+    let rating = currentProblem.value.recallTime - dt;
+
+    // if we're not correct in the first place, it will our rating will just be
+    // how long it took to answer
+    if (!isCorrect.value) {
+        rating = -dt;
+    }
+
+    let skill = skills.getSkill(currentProblem.value.skillName);
+    let k1 = skill.k;
+    let k2 = skill.retain(rating);
+
+    store.responses.push({
+        submission: input,
+        isCorrect: isCorrect.value,
+        rating,
+        deltaK: Math.round((k2 - k1) * 100) / 100,
+    });
+
     mathfield.value.disabled = true;
     mathfield.value.focus();
+}
+
+let isInitialized = false;
+
+function init() {
+    store.generateProblems();
+
+    score.value = 0;
+    currentProblemIndex.value = -1;
+    timer.time = 120;
+    next();
+
+    if (mathfield.value) {
+        mathfield.value.setOptions({
+            inlineShortcuts: {
+                "pi": "\\pi",
+                "sqrt": "\\sqrt",
+                "infty": "\\infty",
+                "int": "\\int",
+                "undefined": "\\textrm{undefined}",
+                "DNE": "\\textrm{DNE}",
+                "sin": "\\sin",
+                "cos": "\\cos",
+                "tan": "\\tan",
+                "csc": "\\csc",
+                "sec": "\\sec",
+                "cot": "\\cot",
+            },
+        });
+    }
+
+    isInitialized = true;
+};
+
+onMounted(() => init());
+
+if (!isInitialized) {
+    init();
 }
 </script>
 
 <template>
-    <div>
+    <div class="game">
         <game-bar :score="score" :streak="streak" :time="timer.time" />
-        <div class="game">
-            <h2>{{ currentInstructions }}</h2>
+        <div class="game-card">
+            <h2 v-if="currentProblem">{{ currentProblem.instruction }}</h2>
             <div>
                 <problem
                     v-if="currentProblem"
@@ -148,8 +181,17 @@ function submit() {
                 <div class="entry">
                     <math-field class="mathfield" ref="mathfield" @keyup="keyup">
                     </math-field>
-                    <button class="accent" ref="submit-button" @click="submit">
-                        Submit
+                    <button
+                        class="accent"
+                        ref="submit-button"
+                        @click="continueGame"
+                    >
+                        <span v-if="isRevealed">
+                            Continue
+                        </span>
+                        <span v-else>
+                            Submit
+                        </span>
                     </button>
                 </div>
             </div>
@@ -172,12 +214,17 @@ function submit() {
 
 <style scoped>
 .game {
+    max-width: 768px;
+    margin: auto;
+}
+
+.game-card {
     box-shadow: 1px 1px 8px #00000055;
     padding: 4em;
 }
 
-.game span.katex-display,
-.game span.katex-display > .katex {
+.game-card span.katex-display,
+.game-card span.katex-display > .katex {
     text-align: left;
 }
 

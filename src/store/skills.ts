@@ -1,15 +1,15 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import Skill from "../skill";
+import Skill, { ISkill } from "../skill";
 
 export const useSkillsStore = defineStore("skills", () => {
     const available: Skill[] = [
         new Skill("Trigonometry", 0),
         new Skill("Inverse Trigonometry", 0),
+        new Skill("Trigonometric Identities", 0),
         new Skill("Limits", 0),
         new Skill("Special Limits", 0),
         new Skill("Differentiation", 0),
-        new Skill("Differential Equations", 0),
         new Skill("Integration", 0),
         new Skill("Geometry", 0),
         new Skill("Particle Motion", 0),
@@ -22,7 +22,8 @@ export const useSkillsStore = defineStore("skills", () => {
         let json = window.localStorage.getItem("skills");
 
         try {
-            current.value = JSON.parse(json ?? "[]");
+            let skillInfo: Array<ISkill> = JSON.parse(json ?? "[]");
+            current.value = skillInfo.map((info) => Skill.fromInfo(info));
         } catch (e) {
             current.value = [];
         }
@@ -35,6 +36,8 @@ export const useSkillsStore = defineStore("skills", () => {
         // add skills that are available but not stored.
         current.value = current.value.concat(available.filter(skill =>
             !current.value.find(s => skill.name == s.name)));
+
+        current.value.forEach(skill => console.log(skill));
     }
 
     function writeToLocalStorage() {
@@ -46,10 +49,19 @@ export const useSkillsStore = defineStore("skills", () => {
         window.localStorage.setItem("skills", json);
     }
 
+    function getSkill(name: string): Skill {
+        let idx = current.value.findIndex((skill) => skill.name == name);
+        if (idx > -1) {
+            return current.value[idx];
+        }
+        throw new Error("Unknown skill " + name);
+    }
+
     return {
         available,
         current,
         readFromLocalStorage,
         writeToLocalStorage,
+        getSkill,
     }
 });

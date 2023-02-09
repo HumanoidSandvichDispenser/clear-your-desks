@@ -1,6 +1,6 @@
-# Memory Quiz 2
+# Clear Your Desks
 
-Improved memory quiz.
+Except for a pencil.
 
 ## Recommended IDE Setup
 

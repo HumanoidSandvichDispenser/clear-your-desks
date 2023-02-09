@@ -1,7 +1,5 @@
 import ProblemData from "./problem-data";
-import { pickFrom, pickNFrom, random, range } from "./utils";
-import nerdamer, { diff } from "nerdamer";
-import "nerdamer/Algebra.js";
+import { pickNFrom } from "../utils";
 
 const problems: { [key: string]: string } = {
     "\\int_{a}^{b} v(t) dt": "s\\left(b\\right)-s\\left(a\\right)",
@@ -22,9 +20,6 @@ export default class ParticleMotionProblem extends ProblemData {
     get recallTime() {
         return 5;
     }
-
-    fn: string = "";
-    args: string = "";
 
     constructor(question: string, answer: string) {
         super(question, answer);
