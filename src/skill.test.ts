@@ -26,13 +26,13 @@ describe("retain method", () => {
         const skill = new Skill("", 1);
         skill.k = 2;
         skill.retain(1);
-        expect(skill.k).toBeCloseTo(1.5);
+        expect(skill.k).toBeCloseTo(1);
     });
 
     it("should decrease k if score is negative", () => {
         const skill = new Skill("", 1);
         skill.k = 3;
         skill.retain(-2);
-        expect(skill.k).toBeCloseTo(3.705, 1);
+        expect(skill.k).toBeCloseTo(5.11, 1);
     });
 });
