@@ -100,3 +100,4 @@ function start() {
 .selection-buttons > button.selection.enabled > p.subtext {
     color: var(--bg0);
 }
+</style>
