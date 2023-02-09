@@ -51,9 +51,10 @@ export default class ProblemData {
     calculateScore(dt: number): number {
         let penalty = 0;
 
-        if (dt > this.recallTime) {
-            penalty += (dt - this.recallTime) * 4;
-            console.log(dt);
+        // just for rewarding even faster players
+        let fastRecallTime = this.recallTime / 4;
+        if (dt > fastRecallTime) {
+            penalty += (dt - fastRecallTime) * 2;
         }
 
         return 100 - penalty;
