@@ -3,7 +3,7 @@ import { ref, computed } from "vue";
 import { useSkillsStore } from "../store/skills";
 import { useRouter } from "vue-router";
 import { useStore } from "../store";
-
+import  Title  from "../components/Title.vue";
 const router = useRouter();
 
 const store = useStore();
@@ -26,6 +26,7 @@ function start() {
 </script>
 
 <template>
+    <Title />
     <div class="home">
         <div class="selection-buttons">
             <button
@@ -99,4 +100,3 @@ function start() {
 .selection-buttons > button.selection.enabled > p.subtext {
     color: var(--bg0);
 }
-</style>
