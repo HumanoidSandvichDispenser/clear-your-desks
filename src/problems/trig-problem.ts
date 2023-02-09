@@ -38,9 +38,9 @@ export default class TrigProblem extends ProblemData {
     fn: string = "";
     angle: string = "";
 
-    constructor(question: string, answer: string, fn: string) {
+    constructor(question: string, answer: string, fn?: string) {
         super(question, answer);
-        this.fn = fn;
+        this.fn = fn ?? "";
         //this.angle = angle;
     }
 
@@ -80,6 +80,12 @@ export default class TrigProblem extends ProblemData {
     checkAnswer(input: string): boolean {
         if (this.answer.includes("undefined")) {
             return input.includes("undefined");
+        }
+
+        // can not use this function's name as the answer (otherwise that would
+        // be cheating)
+        if (this.answer.includes(this.fn)) {
+            return false;
         }
 
         let algebraicCheck = this.algebraicCheck(input);

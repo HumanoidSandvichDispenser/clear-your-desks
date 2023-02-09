@@ -4,6 +4,7 @@ import { useSkillsStore } from "../store/skills";
 import { useRouter } from "vue-router";
 import { useStore } from "../store";
 import TitleVue from "../components/Title.vue";
+
 const router = useRouter();
 
 const store = useStore();

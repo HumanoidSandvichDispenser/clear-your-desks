@@ -10,6 +10,12 @@ import GameBar from "../components/GameBar.vue";
 import router from "../router";
 import Timer from "../timer";
 
+import SuccessAudio1 from "../assets/success1.mp3";
+import SuccessAudio2 from "../assets/success2.mp3";
+import SuccessAudio3 from "../assets/success3.mp3";
+import SuccessAudio4 from "../assets/success4.mp3";
+import SuccessAudio5 from "../assets/success5.mp3";
+
 const store = useStore();
 const skills = useSkillsStore();
 
@@ -85,6 +91,22 @@ function onCorrect(dt: number) {
     reward = Math.max(reward, 10);
     score.value += reward + (10 * streak.value);
     streak.value++;
+
+    //let audioIndex = Math.min(streak.value, 5);
+    let audio = new Audio();
+    //audio.src = "src/assets/success" + audioIndex + ".mp3";
+    if (streak.value == 1) {
+        audio.src = SuccessAudio1;
+    } else if (streak.value == 2) {
+        audio.src = SuccessAudio2;
+    } else if (streak.value == 3) {
+        audio.src = SuccessAudio3;
+    } else if (streak.value == 4) {
+        audio.src = SuccessAudio4;
+    } else if (streak.value == 5) {
+        audio.src = SuccessAudio5;
+    }
+    audio.play();
 }
 
 function onIncorrect() {
