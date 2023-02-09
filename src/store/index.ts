@@ -10,9 +10,11 @@ import TrigProblem from "../problems/trig-problem";
 import DifferentiationProblem from "../problems/differentiation-problem";
 import IntegrationProblem from "../problems/integration-problem";
 import { shuffle } from "../utils";
+import { useSkillsStore } from "./skills";
+import Skill from "../skill";
 
 export const useStore = defineStore("store", () => {
-    const selectedMode = ref("practice");
+    const selectedMode = ref("score-attack");
 
     const selectedSkills = ref<string[]>([]);
 
@@ -23,14 +25,34 @@ export const useStore = defineStore("store", () => {
     const score = ref(0);
 
     function generateProblems() {
+        const skills = useSkillsStore();
+        let selectedSkillObjects: Skill[];
+        if (selectedSkills.value.length == 0) {
+            // if we have not selected skills then they are all selected by
+            // default
+            selectedSkillObjects = Array.from(skills.current);
+        } else {
+            /*
+            selectedSkillObjects = selectedSkills.value.map((skill) =>
+                skills.getSkill(skill));
+            */
+            selectedSkillObjects = skills.available.filter((skill) =>
+                selectedSkills.value.includes(skill.name));
+        }
         responses.value = [];
         problems.value = [];
+        /*
         problems.value = problems.value
             //.concat(DifferentiationProblem.generate(5) ?? [])
             .concat(IntegrationProblem.generate(5) ?? [])
-        console.log(problems.value);
+        */
+        selectedSkillObjects.forEach(skill => {
+            let generatedProblems = skill.problem?.generate(5);
+            if (generatedProblems) {
+                problems.value = problems.value.concat(generatedProblems);
+            }
+        });
         problems.value = shuffle<ProblemData>(problems.value);
-        console.log(problems.value);
         problems.value = problems.value.slice(0, 10);
     }
 

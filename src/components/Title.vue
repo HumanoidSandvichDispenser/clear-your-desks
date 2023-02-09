@@ -2,9 +2,7 @@
 </script>
 <template>
     <img src="src/assets/Title.svg" class="Title">
-
 </template>
-
 
 <style>
 .Title {

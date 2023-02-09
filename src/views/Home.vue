@@ -3,7 +3,7 @@ import { ref, computed } from "vue";
 import { useSkillsStore } from "../store/skills";
 import { useRouter } from "vue-router";
 import { useStore } from "../store";
-import  Title  from "../components/Title.vue";
+import TitleVue from "../components/Title.vue";
 const router = useRouter();
 
 const store = useStore();
@@ -26,8 +26,8 @@ function start() {
 </script>
 
 <template>
-    <Title />
     <div class="home">
+        <title-vue />
         <div class="selection-buttons">
             <button
                 :class="{
@@ -35,8 +35,9 @@ function start() {
                     enabled: store.selectedMode == 'practice'
                 }"
                 @click="store.selectedMode = 'practice'"
+                disabled
             >
-                Zen Mode
+                Zen Mode (coming soon <img src="https://cdn.7tv.app/emote/603caa69faf3a00014dff0b1/1x.webp" />)
                 <p>Standard memory quiz practice</p>
             </button>
             <button
@@ -100,3 +101,4 @@ function start() {
 .selection-buttons > button.selection.enabled > p.subtext {
     color: var(--bg0);
 }
+</style>

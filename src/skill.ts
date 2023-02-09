@@ -1,3 +1,5 @@
+import ProblemData from "./problems/problem-data";
+
 export interface ISkill {
     /**
      * The name of the skill.
@@ -25,11 +27,18 @@ export default class Skill implements ISkill {
     retention: number;
     k: number = 1;
     lastRetainTime: number;
+    problem?: typeof ProblemData;
 
-    constructor(name: string, retention: number, timeOrigin?: number) {
+    constructor(
+        name: string,
+        retention: number,
+        timeOrigin?: number,
+        problem?: typeof ProblemData,
+    ) {
         this.name = name;
         this.retention = retention ?? 0;
         this.lastRetainTime = timeOrigin ?? new Date().getTime();
+        this.problem = problem;
     }
 
     static fromInfo(info: ISkill) {
