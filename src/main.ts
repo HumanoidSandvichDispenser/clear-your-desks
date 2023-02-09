@@ -1,3 +1,9 @@
+/**
+ * Copyright (C) 2023  HumanoidSandvichDispenser/sandvichxyz/pyrofromcsgo
+ *     This program comes with ABSOLUTELY NO WARRANTY. This is free software,
+ *     and you are welcome to redistribute it under certain conditions.
+ */
+
 import { createApp } from "vue";
 import "./style.css";
 
