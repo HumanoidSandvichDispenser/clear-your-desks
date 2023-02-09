@@ -65,6 +65,24 @@ export function range(a: number, b: number, step: number = 1): number[] {
 }
 
 export function shuffle<T>(array: Array<T>) {
+    let counter = array.length;
+
+    // While there are elements in the array
+    while (counter > 0) {
+        // Pick a random index
+        let index = Math.floor(Math.random() * counter);
+
+        // Decrease counter by 1
+        counter--;
+
+        // And swap the last element with it
+        let temp = array[counter];
+        array[counter] = array[index];
+        array[index] = temp;
+    }
+
+    return array;
+    /*
     for (let i = array.length; i >= 0; i--) {
         let randomIdx = random(0, array.length - 1);
         let buf = array[i];
@@ -73,4 +91,6 @@ export function shuffle<T>(array: Array<T>) {
     }
 
     return array;
+        */
+    //return array.sort(() => Math.random() - 0.5);
 }

@@ -64,6 +64,11 @@ const responses = computed(() => store.responses);
                         v-katex="responses[i].submission"
                     />
                 </td>
+                <td>
+                    <span v-if="i < responses.length">
+                        {{ responses[i].deltaK }}
+                    </span>
+                </td>
             </tr>
         </table>
         <router-link to="/">

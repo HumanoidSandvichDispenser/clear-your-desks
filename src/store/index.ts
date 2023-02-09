@@ -25,7 +25,9 @@ export const useStore = defineStore("store", () => {
             .concat(GeometryProblem.generate(5) ?? [])
             .concat(TrigProblem.generate(5) ?? [])
             .concat(ParticleMotionProblem.generate(5) ?? []);
-        problems.value = shuffle(problems.value);
+        console.log(problems.value);
+        problems.value = shuffle<ProblemData>(problems.value);
+        console.log(problems.value);
         problems.value = problems.value.slice(0, 10);
     }
 

@@ -6,10 +6,10 @@ export const useSkillsStore = defineStore("skills", () => {
     const available: Skill[] = [
         new Skill("Trigonometry", 0),
         new Skill("Inverse Trigonometry", 0),
+        new Skill("Trigonometric Identities", 0),
         new Skill("Limits", 0),
         new Skill("Special Limits", 0),
         new Skill("Differentiation", 0),
-        new Skill("Differential Equations", 0),
         new Skill("Integration", 0),
         new Skill("Geometry", 0),
         new Skill("Particle Motion", 0),
@@ -46,10 +46,19 @@ export const useSkillsStore = defineStore("skills", () => {
         window.localStorage.setItem("skills", json);
     }
 
+    function getSkill(name: string): Skill {
+        let idx = current.value.findIndex((skill) => skill.name == name);
+        if (idx > -1) {
+            return current.value[idx];
+        }
+        throw new Error("Unknown skill " + name);
+    }
+
     return {
         available,
         current,
         readFromLocalStorage,
         writeToLocalStorage,
+        getSkill,
     }
 });

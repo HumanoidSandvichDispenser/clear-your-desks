@@ -45,14 +45,16 @@ export default class Skill {
      * @param score The factor to change the rate of forgetting by. Negative
      * numbers causes the retention/forgetting curve to be steeper.
      */
-    retain(score: number): void {
+    retain(score: number): number {
+        this.retention = 1;
+        return this.k = this.predictK(score);
+    }
+
+    predictK(score: number): number {
         // let `factor` be the score normalized from all reals to (-1, 1) using
         // the curve of arctan
         let factor = Math.atan(score) * 2 / Math.PI;
-
-        this.retention = 1;
-
-        this.k *= (-factor + 1);
+        return this.k * (-factor + 1);
     }
 
     get retentionPercentage(): string {

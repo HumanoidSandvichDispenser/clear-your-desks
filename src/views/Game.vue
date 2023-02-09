@@ -2,6 +2,7 @@
 import { computed, onMounted, reactive, ref, watch } from "vue";
 // TODO: replace relative paths with @ root paths
 import { useStore } from "../store";
+import { useSkillsStore } from "../store/skills";
 import Problem from "../components/Problem.vue";
 import { MathfieldElement } from "mathlive";
 import ProblemData from "../problems/problem-data";
@@ -10,6 +11,7 @@ import router from "../router";
 import Timer from "../timer";
 
 const store = useStore();
+const skills = useSkillsStore();
 
 const score = computed({
     get: (): number => store.score,
@@ -77,10 +79,10 @@ function continueGame() {
 }
 
 function onCorrect(dt: number) {
-    score.value = Math.round(currentProblem.value.calculateScore(dt));
-    // score with penalty can not be less than 50
-    score.value = Math.max(score.value, 50);
-    score.value += 10 * streak.value;
+    let reward = Math.round(currentProblem.value.calculateScore(dt));
+
+    reward = Math.max(reward, 10);
+    score.value += reward + (10 * streak.value);
     streak.value++;
 }
 
@@ -100,7 +102,26 @@ function submit() {
     isCorrect.value ? onCorrect(dt) : onIncorrect();
     isRevealed.value = true;
 
-    store.responses.push({ submission: input, isCorrect: isCorrect.value });
+    // negative rating when answering too slow, positive for too fast.
+    let rating = currentProblem.value.recallTime - dt;
+
+    // if we're not correct in the first place, it will our rating will just be
+    // how long it took to answer
+    if (!isCorrect.value) {
+        rating = -dt;
+    }
+
+    let skill = skills.getSkill(currentProblem.value.skillName);
+    let k1 = skill.k;
+    let k2 = skill.retain(rating);
+
+    store.responses.push({
+        submission: input,
+        isCorrect: isCorrect.value,
+        rating,
+        deltaK: Math.round((k2 - k1) * 100) / 100,
+    });
+
     mathfield.value.disabled = true;
     mathfield.value.focus();
 }
@@ -144,10 +165,9 @@ if (!isInitialized) {
 </script>
 
 <template>
-    <div>
+    <div class="game">
         <game-bar :score="score" :streak="streak" :time="timer.time" />
-        index {{ currentProblemIndex }}
-        <div class="game">
+        <div class="game-card">
             <h2 v-if="currentProblem">{{ currentProblem.instruction }}</h2>
             <div>
                 <problem
@@ -192,12 +212,17 @@ if (!isInitialized) {
 
 <style scoped>
 .game {
+    max-width: 768px;
+    margin: auto;
+}
+
+.game-card {
     box-shadow: 1px 1px 8px #00000055;
     padding: 4em;
 }
 
-.game span.katex-display,
-.game span.katex-display > .katex {
+.game-card span.katex-display,
+.game-card span.katex-display > .katex {
     text-align: left;
 }
 
