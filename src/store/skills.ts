@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import Skill from "../skill";
+import Skill, { ISkill } from "../skill";
 
 export const useSkillsStore = defineStore("skills", () => {
     const available: Skill[] = [
@@ -22,7 +22,8 @@ export const useSkillsStore = defineStore("skills", () => {
         let json = window.localStorage.getItem("skills");
 
         try {
-            current.value = JSON.parse(json ?? "[]");
+            let skillInfo: Array<ISkill> = JSON.parse(json ?? "[]");
+            current.value = skillInfo.map((info) => Skill.fromInfo(info));
         } catch (e) {
             current.value = [];
         }
@@ -35,6 +36,8 @@ export const useSkillsStore = defineStore("skills", () => {
         // add skills that are available but not stored.
         current.value = current.value.concat(available.filter(skill =>
             !current.value.find(s => skill.name == s.name)));
+
+        current.value.forEach(skill => console.log(skill));
     }
 
     function writeToLocalStorage() {
