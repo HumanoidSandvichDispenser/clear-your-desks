@@ -29,16 +29,16 @@ function exit() {
             <div
                 :class="{
                     timer: true,
-                    alert: time < 30,
+                    alert: (time ?? 0) < 30,
                 }"
             >
                 <bootstrap-icon icon="stopwatch" />
-                {{ Math.floor(time) }}
+                {{ Math.floor(time ?? 0) }}
             </div>
             <div
                 :class="{
                     streak: true,
-                    active: streak > 0,
+                    active: (streak ?? 0) > 0,
                 }"
             >
                 <bootstrap-icon icon="fire" />

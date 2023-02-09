@@ -143,9 +143,13 @@ function init() {
                 "pi": "\\pi",
                 "sqrt": "\\sqrt",
                 "infty": "\\infty",
+                "infinity": "\\infty",
                 "int": "\\int",
                 "undefined": "\\textrm{undefined}",
                 "DNE": "\\textrm{DNE}",
+                "dne": "\\textrm{DNE}",
+                "ln": "\\ln",
+                "log": "\\log",
                 "sin": "\\sin",
                 "cos": "\\cos",
                 "tan": "\\tan",
@@ -195,19 +199,23 @@ if (!isInitialized) {
                     </button>
                 </div>
             </div>
-            <div
-                :class="{
-                    'answer': true,
-                    [isCorrect ? 'correct' : 'incorrect']: true,
-                }"
-                v-if="isRevealed"
-            >
-                <h2 v-if="isCorrect">You are correct</h2>
-                <h2 v-else>
-                    Correct solution:
-                    <span v-katex="currentProblem.answer"></span>
-                </h2>
-            </div>
+        </div>
+        <div
+            :class="{
+                'answer': true,
+                [isCorrect ? 'correct' : 'incorrect']: true,
+            }"
+            v-if="isRevealed"
+        >
+            <h2 v-if="isCorrect">You are correct</h2>
+            <h2 v-else>
+                Correct solution:
+                <span v-katex="currentProblem.answer"></span>
+                <div class="latex-solution">
+                    <div>LaTeX: {{ currentProblem.answer }}</div>
+                    <div>Your response: {{ mathfield?.value }}</div>
+                </div>
+            </h2>
         </div>
     </div>
 </template>
@@ -259,5 +267,17 @@ if (!isInitialized) {
     vertical-align: middle;
     padding: 0.6em;
     font-size: 18px;
+}
+
+.answer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+.latex-solution {
+    font: monospace;
+    font-size: 16px;
+    opacity: 0.5;
 }
 </style>

@@ -9,7 +9,7 @@ const responses = computed(() => store.responses);
 
 <template>
     <div class="results">
-        <div>
+        <div class="score-panel">
             <div>
                 <strong>
                     <small>YOUR SCORE</small>
@@ -78,10 +78,13 @@ const responses = computed(() => store.responses);
 </template>
 
 <style scoped>
-.score {
-    font-size: 72px;
-    font-weight: 700;
-    padding: 48px;
+@keyframes slide {
+    0% {
+        height: 100vh;
+    }
+    100% {
+        height: 256px;
+    }
 }
 
 .results {
@@ -92,6 +95,22 @@ const responses = computed(() => store.responses);
     margin: auto;
     border-radius: 4px;
     border-spacing: 0 8px;
+}
+
+.score-panel {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    animation: slide 1s;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+}
+
+.score {
+    font-size: 72px;
+    font-weight: 700;
+    padding: 48px;
 }
 
 th {
