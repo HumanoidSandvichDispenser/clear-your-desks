@@ -56,9 +56,6 @@ export default class ProblemData {
             console.log(dt);
         }
 
-        // if our time is less than the recall time, we start penalizing a few
-        // points penalize 10 points for each extra second
-
         return 100 - penalty;
     }
 }
