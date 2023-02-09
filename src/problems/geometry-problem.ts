@@ -5,8 +5,10 @@ import ProblemData from "./problem-data";
 const problems: { [key: string]: string } = {
     "V_\\textrm{cylinder}": "\\pi r^2 h",
     "V_\\textrm{cone}": "\\frac{1}{3} \\pi r^2 h",
-    "A_\\textrm{trapezoid}": "\\frac{b_1 + b_2}{2} h",
+    "A_\\textrm{trapezoid}": "\\frac{1}{2} (b_1 + b_2) h",
     "A_\\textrm{circle}": "\\pi r^2",
+    "V_\\textrm{sphere}": "\\frac{4}{3} \\pi r^3",
+    "\\textrm{distance formula}": "\\sqrt{x^2 + y^2}",
 };
 
 export default class GeometryProblem extends ProblemData {
@@ -15,15 +17,11 @@ export default class GeometryProblem extends ProblemData {
     }
 
     get instruction() {
-        return "Find the formula for the shape.";
+        return "Find the formula.";
     }
 
     get recallTime() {
         return 8;
-    }
-
-    constructor(question: string, answer: string) {
-        super(question, answer);
     }
 
     static generate(count: number): ProblemData[] | undefined {
@@ -32,31 +30,7 @@ export default class GeometryProblem extends ProblemData {
             new GeometryProblem(question, problems[question]));
     }
 
-    checkAnswer(input: string): boolean {
-        try {
-            let nInput = nerdamer.convertFromLaTeX(input);
-            let nQuestion = nerdamer.convertFromLaTeX(this.answer);
-
-            // raise both numbers to the second power since nerdamer can not
-            // rationalize denominators by itself
-            let algebraicCheck = nInput.pow(2).eq(nQuestion.pow(2));
-            if (algebraicCheck) {
-                return true;
-            }
-
-            let evalCheck = nInput.evaluate().eq(nQuestion.evaluate());
-            if (evalCheck) {
-                return true;
-            }
-
-            return false;
-        } catch (err) {
-            if (err instanceof Error) {
-                if (err.name == "ParseError") {
-                    return false;
-                }
-            }
-            throw err;
-        }
+    checkAnswer(input: string) {
+        return this.algebraicCheck(input) || this.evalCheck(input);
     }
 }

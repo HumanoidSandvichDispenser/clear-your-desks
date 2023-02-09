@@ -1,3 +1,5 @@
+import nerdamer from "nerdamer";
+
 export default class ProblemData {
     /**
      * The name of the skill this problem involves.
@@ -44,6 +46,46 @@ export default class ProblemData {
         throw new Error("Not implemented.");
     }
 
+    algebraicCheck(input: string): boolean {
+        try {
+            let nInput = nerdamer.convertFromLaTeX(input);
+            let nQuestion = nerdamer.convertFromLaTeX(this.answer);
+
+            let algebraicCheck = nInput.eq(nQuestion);
+            if (algebraicCheck) {
+                return true;
+            }
+
+            // raise both numbers to the second power since nerdamer can not
+            // rationalize denominators by itself
+            algebraicCheck = nInput.pow(2).eq(nQuestion.pow(2));
+            return algebraicCheck;
+
+        } catch (err) {
+            if (err instanceof Error) {
+                if (err.name == "ParseError") {
+                    return false;
+                }
+            }
+            throw err;
+        }
+    }
+
+    evalCheck(input: string): boolean {
+        try {
+            let nInput = nerdamer.convertFromLaTeX(input);
+            let nQuestion = nerdamer.convertFromLaTeX(this.answer);
+
+            return nInput.evaluate().eq(nQuestion.evaluate());
+        } catch (err) {
+            if (err instanceof Error) {
+                if (err.name == "ParseError") {
+                    return false;
+                }
+            }
+            throw err;
+        }
+    }
 
     /**
      * @param dt The time in seconds it took to answer

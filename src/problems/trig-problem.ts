@@ -38,10 +38,10 @@ export default class TrigProblem extends ProblemData {
     fn: string = "";
     angle: string = "";
 
-    constructor(question: string, answer: string, fn: string, angle: string) {
+    constructor(question: string, answer: string, fn: string) {
         super(question, answer);
         this.fn = fn;
-        this.angle = angle;
+        //this.angle = angle;
     }
 
     static generate(count: number): ProblemData[] | undefined {
@@ -62,21 +62,15 @@ export default class TrigProblem extends ProblemData {
                 tex,
                 "\\textrm{undefined}",
                 fn,
-                angle
             )
         }
         try {
             let expr = nerdamer.convertFromLaTeX(tex);
-            return new TrigProblem(tex, expr.toTeX(), fn, angle);
+            return new TrigProblem(tex, expr.toTeX(), fn);
         } catch (err) {
             if (err instanceof Error) {
                 if (err.message.includes(" is undefined for ")) {
-                    return new TrigProblem(
-                        tex,
-                        "\\textrm{undefined}",
-                        fn,
-                        angle
-                    );
+                    return new TrigProblem(tex, "\\textrm{undefined}", fn);
                 }
             }
             throw err;
@@ -88,29 +82,11 @@ export default class TrigProblem extends ProblemData {
             return input.includes("undefined");
         }
 
-        try {
-            let nInput = nerdamer.convertFromLaTeX(input);
-            let nQuestion = nerdamer.convertFromLaTeX(this.answer);
-            // raise both numbers to the second power since nerdamer can not
-            // rationalize denominators by itself
-            let algebraicCheck = nInput.pow(2).eq(nQuestion.pow(2));
-            if (algebraicCheck) {
-                return true;
-            }
-
-            let evalCheck = nInput.evaluate().eq(nQuestion.evaluate());
-            if (evalCheck) {
-                return true;
-            }
-
-            return false;
-        } catch (err) {
-            if (err instanceof Error) {
-                if (err.name == "ParseError") {
-                    return false;
-                }
-            }
-            throw err;
+        let algebraicCheck = this.algebraicCheck(input);
+        if (algebraicCheck) {
+            return true;
         }
+
+        return this.evalCheck(input);
     }
 }

@@ -212,8 +212,15 @@ if (!isInitialized) {
                 Correct solution:
                 <span v-katex="currentProblem.answer"></span>
                 <div class="latex-solution">
-                    <div>LaTeX: {{ currentProblem.answer }}</div>
-                    <div>Your response: {{ mathfield?.value }}</div>
+                    <div>
+                        LaTeX: {{ currentProblem.answer }}
+                        Your response: {{ mathfield?.value }}.
+                    </div>
+                    <div>
+                        File an issue on
+                        <a href="https://github.com/humanoidsandvichdispenser/clear-your-desks/issues">the GitHub repository</a>
+                        if your solution was not marked correct but should be accepted.
+                    </div>
                 </div>
             </h2>
         </div>
@@ -276,7 +283,8 @@ if (!isInitialized) {
 }
 
 .latex-solution {
-    font: monospace;
+    font-family: monospace;
+    font-weight: 500;
     font-size: 16px;
     opacity: 0.5;
 }

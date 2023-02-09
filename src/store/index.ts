@@ -1,10 +1,14 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import GeometryProblem from "../problems/geometry-problem";
+import LimitProblem from "../problems/limit-problem";
 import ParticleMotionProblem from "../problems/particle-motion-problem";
 import ProblemData from "../problems/problem-data";
 import { UserResponse } from "../problems/response";
+import TrigIdentityProblem from "../problems/trig-identity-problem";
 import TrigProblem from "../problems/trig-problem";
+import DifferentiationProblem from "../problems/differentiation-problem";
+import IntegrationProblem from "../problems/integration-problem";
 import { shuffle } from "../utils";
 
 export const useStore = defineStore("store", () => {
@@ -22,9 +26,8 @@ export const useStore = defineStore("store", () => {
         responses.value = [];
         problems.value = [];
         problems.value = problems.value
-            .concat(GeometryProblem.generate(5) ?? [])
-            .concat(TrigProblem.generate(5) ?? [])
-            .concat(ParticleMotionProblem.generate(5) ?? []);
+            //.concat(DifferentiationProblem.generate(5) ?? [])
+            .concat(IntegrationProblem.generate(5) ?? [])
         console.log(problems.value);
         problems.value = shuffle<ProblemData>(problems.value);
         console.log(problems.value);
