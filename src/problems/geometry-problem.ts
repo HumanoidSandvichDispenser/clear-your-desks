@@ -3,10 +3,10 @@ import { pickNFrom } from "../utils";
 import ProblemData from "./problem-data";
 
 const problems: { [key: string]: string } = {
-    "\\textrm{Volume of a cylinder}": "\\pi r^2 h",
-    "\\textrm{Volume of a cone}": "\\frac{1}{3} \\pi r^2 h",
-    "\\textrm{Area of a trapezoid}": "\\frac{b_1 + b_2}{2} h",
-    "\\textrm{Area of a circle}": "\\pi r^2",
+    "V_\\textrm{cylinder}": "\\pi r^2 h",
+    "V_\\textrm{cone}": "\\frac{1}{3} \\pi r^2 h",
+    "A_\\textrm{trapezoid}": "\\frac{b_1 + b_2}{2} h",
+    "A_\\textrm{circle}": "\\pi r^2",
 };
 
 export default class GeometryProblem extends ProblemData {
@@ -15,7 +15,7 @@ export default class GeometryProblem extends ProblemData {
     }
 
     get instruction() {
-        return "Find the formula.";
+        return "Find the formula for the shape.";
     }
 
     get recallTime() {
