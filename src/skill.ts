@@ -71,7 +71,8 @@ export default class Skill implements ISkill {
         // let `factor` be the score normalized from all reals to (-1, 1) using
         // the curve of arctan
         let factor = Math.atan(score) * 2 / Math.PI;
-        return this.k * (-factor + 1);
+        return this.k - factor;
+        //return this.k * (-factor + 1);
     }
 
     get retentionPercentage(): string {
