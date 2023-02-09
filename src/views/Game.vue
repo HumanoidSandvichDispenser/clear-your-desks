@@ -37,6 +37,7 @@ const isCorrect = ref(false);
 const isRevealed = ref(false);
 
 function end() {
+    skills.writeToLocalStorage();
     router.push("/results");
 }
 
@@ -131,6 +132,7 @@ let isInitialized = false;
 function init() {
     store.generateProblems();
 
+    score.value = 0;
     currentProblemIndex.value = -1;
     timer.time = 120;
     next();
