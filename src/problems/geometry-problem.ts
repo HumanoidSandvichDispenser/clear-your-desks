@@ -19,7 +19,7 @@ export default class GeometryProblem extends ProblemData {
     }
 
     get recallTime() {
-        return 5;
+        return 8;
     }
 
     constructor(question: string, answer: string) {
