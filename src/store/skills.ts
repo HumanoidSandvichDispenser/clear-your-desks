@@ -6,13 +6,14 @@ import IntegrationProblem from "../problems/integration-problem";
 import LimitProblem from "../problems/limit-problem";
 import ParticleMotionProblem from "../problems/particle-motion-problem";
 import TrigIdentityProblem from "../problems/trig-identity-problem";
+import InverseTrigProblem from "../problems/inverse-trig-problem";
 import TrigProblem from "../problems/trig-problem";
 import Skill, { ISkill } from "../skill";
 
 export const useSkillsStore = defineStore("skills", () => {
     const available: Skill[] = [
         new Skill("Trigonometry", 0, undefined, TrigProblem),
-        //new Skill("Inverse Trigonometry", 0),
+        new Skill("Inverse Trigonometry", 0, undefined, InverseTrigProblem),
         new Skill("Trigonometric Identities", 0, undefined, TrigIdentityProblem),
         new Skill("Limits", 0, undefined, LimitProblem),
         new Skill("Differentiation", 0, undefined, DifferentiationProblem),

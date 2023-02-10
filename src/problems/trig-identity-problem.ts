@@ -10,6 +10,10 @@ const problems: { [key: string]: string } = {
     "\\sin^2(x) + \\cos^2(x)": "1",
     "\\sec^2(x) - \\tan^2(x)": "1",
     "\\csc^2(x) - \\cot^2(x)": "1",
+    "\\sin(2x)": "2\\sin(x)\\cos(x)",
+    "\\cos^2(x) - \\sin^2(x)": "\\cos(2x)",
+    "2\\cos^2(x) - 1": "\\cos(2x)",
+    "1 - 2\\sin^2(x)": "\\cos(2x)",
 };
 
 export default class TrigIdentityProblem extends ProblemData {

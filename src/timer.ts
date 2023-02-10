@@ -30,7 +30,6 @@ export default class Timer {
         this.timer = -1;
         let dt = (new Date().getTime() - this.startTime) / 1000;
         this.time = this.initialTime - dt;
-        console.log(this.time);
         return dt;
     }
 }

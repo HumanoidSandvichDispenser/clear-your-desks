@@ -6,6 +6,7 @@ const problems: { [key: string]: string } = {
     "\\int_{a}^{b} a(t) dt": "v\\left(b\\right)-v\\left(a\\right)",
     "\\frac{d}{dt} v(t)": "a\\left(t\\right)",
     "\\frac{d}{dt} s(t)": "v\\left(t\\right)",
+    "\\int_{a}^{b} \\int_{a}^{b} a(t) dt": "s(a)-s(b)",
 };
 
 export default class ParticleMotionProblem extends ProblemData {

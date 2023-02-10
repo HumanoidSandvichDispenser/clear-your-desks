@@ -43,7 +43,7 @@ export default class LimitProblem extends ProblemData {
         // nerdamer uses `log` instead of `ln`
         let answer = this.answer;
         input = input.replace("\\ln", "\\log");
-        this.answer.replace("\\ln", "\\log");
+        this.answer = this.answer.replace("\\ln", "\\log");
         let r = problems[this.question] == input || this.algebraicCheck(input);
         this.answer = answer;
         return r;

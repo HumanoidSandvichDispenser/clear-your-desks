@@ -2,13 +2,14 @@ import { pickNFrom } from "../utils";
 import ProblemData from "./problem-data";
 
 const problems: { [key: string]: string } = {
-    "\\int f^{\\prime}(x) dx": "f(x) + C",
-    "\\int x^n dx": "\\frac{x^{n + 1}}{n + 1} + C",
-    "\\int \\log(x) dx": "x \\log(x) - x + C",
-    "\\int e^x dx": "e^x + C",
-    "\\int \\sin(x) dx": "-\\cos(x) + C",
-    "\\int \\cos(x) dx": "\\sin(x) + C",
-    "\\int \\frac{1}{x} dx": "\\ln(x) + C",
+    //"\\int f^{\\prime}(x) dx": "f(x) + C",
+    //"\\int x^n dx": "\\frac{x^{n + 1}}{n + 1} + C",
+    //"\\int \\log(x) dx": "x \\log(x) - x + C",
+    //"\\int e^x dx": "e^x + C",
+    //"\\int \\sin(x) dx": "-\\cos(x) + C",
+    //"\\int \\cos(x) dx": "\\sin(x) + C",
+    //"\\int \\frac{1}{x} dx": "\\ln(x) + C",
+    "\\int udv": "uv-\\int vdu",
 };
 
 export default class LimitProblem extends ProblemData {

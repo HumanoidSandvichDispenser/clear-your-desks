@@ -84,9 +84,9 @@ export default class TrigProblem extends ProblemData {
 
         // can not use this function's name as the answer (otherwise that would
         // be cheating)
-        if (this.answer.includes(this.fn)) {
-            return false;
-        }
+        //if (this.fn != "" && this.answer.includes(this.fn)) {
+        //    return false;
+        //}
 
         let algebraicCheck = this.algebraicCheck(input);
         if (algebraicCheck) {
