@@ -9,6 +9,7 @@ import ProblemData from "../problems/problem-data";
 import GameBar from "../components/GameBar.vue";
 import router from "../router";
 import Timer from "../timer";
+import SolutionPopup from "../components/SolutionPopup.vue";
 
 import SuccessAudio1 from "../assets/success1.mp3";
 import SuccessAudio2 from "../assets/success2.mp3";
@@ -222,30 +223,12 @@ if (!isInitialized) {
                 </div>
             </div>
         </div>
-        <div
-            :class="{
-                'answer': true,
-                [isCorrect ? 'correct' : 'incorrect']: true,
-            }"
-            v-if="isRevealed"
-        >
-            <h2 v-if="isCorrect">You are correct</h2>
-            <h2 v-else>
-                Correct solution:
-                <span v-katex="currentProblem.answer"></span>
-                <div class="latex-solution">
-                    <div>
-                        LaTeX: {{ currentProblem.answer }}
-                        Your response: {{ mathfield?.value }}.
-                    </div>
-                    <div>
-                        File an issue on
-                        <a href="https://github.com/humanoidsandvichdispenser/clear-your-desks/issues">the GitHub repository</a>
-                        if your solution was not marked correct but should be accepted.
-                    </div>
-                </div>
-            </h2>
-        </div>
+        <solution-popup
+            :is-revealed="isRevealed"
+            :is-correct="isCorrect"
+            :answer="currentProblem?.answer"
+            :response="mathfield?.value"
+        />
     </div>
 </template>
 
@@ -296,18 +279,5 @@ if (!isInitialized) {
     vertical-align: middle;
     padding: 0.6em;
     font-size: 18px;
-}
-
-.answer {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-}
-
-.latex-solution {
-    font-family: monospace;
-    font-weight: 500;
-    font-size: 16px;
-    opacity: 0.5;
 }
 </style>
