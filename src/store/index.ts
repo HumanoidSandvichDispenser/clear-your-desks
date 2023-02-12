@@ -24,6 +24,8 @@ export const useStore = defineStore("store", () => {
 
     const score = ref(0);
 
+    const isSupaLidlMode = ref(false);
+
     function generateProblems() {
         const skills = useSkillsStore();
         let selectedSkillObjects: Skill[];
@@ -63,6 +65,7 @@ export const useStore = defineStore("store", () => {
         responses,
         score,
         generateProblems,
+        isSupaLidlMode,
         //maxTime,
         //currentTime,
         //isRunning,

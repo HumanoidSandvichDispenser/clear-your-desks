@@ -86,6 +86,6 @@ export default class Skill implements ISkill {
     }
 
     get retentionPercentage(): string {
-        return Math.round(this.predictRetentionDecay() * 100) + "%";
+        return Math.round(this.predictRetentionDecay() * 100) + "% retention";
     }
 }

@@ -1,4 +1,5 @@
 @import url("https://cdn.jsdelivr.net/npm/@xz/fonts@1/serve/hk-grotesk.min.css");
+@import url("https://fonts.cdnfonts.com/css/arial-rounded-mt-bold");
 
 :root {
     font-family: "HK Grotesk", sans-serif;
@@ -66,10 +67,6 @@ button.start-button {
     text-transform: uppercase;
 }
 
-button.start-button:hover {
-    background-color: var(--fg0);
-}
-
 button.start-button:active {
     transform: translateY(4px);
     transition-duration: 200ms;
@@ -80,6 +77,29 @@ button.start-button:hover {
     background-color: var(--lgreen);
     transition-duration: 200ms;
 }
+
+button.secondary {
+    color: var(--fg2);
+    box-shadow: 0 8px var(--fg2);
+    background-color: var(--bg2);
+    outline: none;
+    width: 250px;
+    margin-top: 16px;
+    transition-duration: 200ms;
+    text-transform: uppercase;
+}
+
+button.secondary:active {
+    transform: translateY(4px);
+    transition-duration: 200ms;
+    box-shadow: 0 4px var(--fg2);
+}
+
+button.secondary:hover {
+    background-color: var(--bg1);
+    transition-duration: 200ms;
+}
+
 
 button.selection {
     padding: 1em 2em;

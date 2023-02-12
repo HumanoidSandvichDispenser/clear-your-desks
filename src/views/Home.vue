@@ -4,6 +4,7 @@ import { useSkillsStore } from "../store/skills";
 import { useRouter } from "vue-router";
 import { useStore } from "../store";
 import TitleVue from "../components/Title.vue";
+import Links from "../components/Links.vue";
 
 const router = useRouter();
 
@@ -24,11 +25,23 @@ function toggleTopic(topic: string) {
 function start() {
     router.push("/game/" + store.selectedMode);
 }
+
+function selectLowRetention() {
+    store.selectedSkills.length = 0;
+    skills.current.forEach((skill) => {
+        let retention = skill.predictRetentionDecay();
+        console.log(retention);
+        if (retention < 0.7) {
+            store.selectedSkills.push(skill.name);
+        }
+    });
+}
 </script>
 
 <template>
     <div class="home">
         <title-vue />
+        <links />
         <div class="selection-buttons">
             <button
                 :class="{
@@ -38,8 +51,8 @@ function start() {
                 @click="store.selectedMode = 'practice'"
                 disabled
             >
-                Zen Mode (coming soon <img src="https://cdn.7tv.app/emote/603caa69faf3a00014dff0b1/1x.webp" />)
-                <p>Standard memory quiz practice</p>
+                Zen Mode
+                <p>coming soon <img src="https://cdn.7tv.app/emote/603caa69faf3a00014dff0b1/1x.webp" /></p>
             </button>
             <button
                 :class="{
@@ -53,6 +66,12 @@ function start() {
             </button>
         </div>
         <hr>
+        <h1
+            class="notice"
+            v-if="store.selectedSkills.length <= 0"
+        >
+            Select the topics to practice below.
+        </h1>
         <div class="selection-buttons">
             <button
                 v-for="skill in skills.current"
@@ -68,7 +87,21 @@ function start() {
                 </p>
             </button>
         </div>
-        <button class="start-button" @click="start">START</button>
+        <div class="buttons">
+            <button 
+                class="start-button"
+                @click="start"
+                :disabled="store.selectedSkills.length <= 0"
+            >
+                Start
+            </button>
+            <button 
+                class="secondary"
+                @click="selectLowRetention"
+            >
+                Select low retention
+            </button>
+        </div>
     </div>
 </template>
 
@@ -101,5 +134,16 @@ function start() {
 
 .selection-buttons > button.selection.enabled > p.subtext {
     color: var(--bg0);
+}
+
+.notice {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    column-gap: 16px;
 }
 </style>
