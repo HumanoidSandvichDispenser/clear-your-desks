@@ -30,7 +30,6 @@ function selectLowRetention() {
     store.selectedSkills.length = 0;
     skills.current.forEach((skill) => {
         let retention = skill.predictRetentionDecay();
-        console.log(retention);
         if (retention < 0.7) {
             store.selectedSkills.push(skill.name);
         }

@@ -137,7 +137,11 @@ function submit() {
 
     let skill = skills.getSkill(currentProblem.value.skillName);
     let k1 = skill.k;
-    let k2 = skill.retain(rating);
+    skill.retain(rating);
+    let k2 = skill.k;
+    console.log("Retaining");
+    console.log(skill);
+    console.log(skills.current);
 
     store.responses.push({
         submission: input,

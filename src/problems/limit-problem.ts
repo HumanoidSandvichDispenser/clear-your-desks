@@ -16,7 +16,7 @@ const problems: { [key: string]: string } = {
 
 export default class LimitProblem extends ProblemData {
     get skillName() {
-        return "Particle Motion";
+        return "Limits";
     }
 
     get instruction() {

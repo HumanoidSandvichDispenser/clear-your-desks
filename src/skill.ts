@@ -17,6 +17,11 @@ export interface ISkill {
     k: number;
 
     /**
+     * The score of this skill.
+     */
+    score: number;
+
+    /**
      * The UNIX timestamp when the skill was last modified (for skill drain).
      */
     lastRetainTime: number;
@@ -25,8 +30,8 @@ export interface ISkill {
 export default class Skill implements ISkill {
     name: string;
     retention: number;
-    k: number = 1;
     lastRetainTime: number;
+    score: number = 0;
     problem?: typeof ProblemData;
 
     constructor(
@@ -43,7 +48,7 @@ export default class Skill implements ISkill {
 
     static fromInfo(info: ISkill) {
         const s = new Skill(info.name, info.retention, info.lastRetainTime);
-        s.k = info.k;
+        s.score = info.score;
         return s;
     }
 
@@ -71,9 +76,11 @@ export default class Skill implements ISkill {
      * numbers causes the retention/forgetting curve to be steeper.
      */
     retain(score: number): number {
+        score = Math.sign(score) * (Math.min(Math.abs(score), 8));
         this.retention = 1;
         this.lastRetainTime = new Date().getTime();
-        return this.k = this.predictK(score);
+        //return this.k = this.predictK(score);
+        return (this.score += score);
     }
 
     predictK(score: number): number {
@@ -87,5 +94,9 @@ export default class Skill implements ISkill {
 
     get retentionPercentage(): string {
         return Math.round(this.predictRetentionDecay() * 100) + "% retention";
+    }
+
+    get k(): number {
+        return Math.atan(-this.score) * 2 / Math.PI + 1;
     }
 }
