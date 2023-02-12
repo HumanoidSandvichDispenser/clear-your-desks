@@ -11,6 +11,11 @@ const props = defineProps({
 function exit() {
     router.back();
 }
+
+function openHelp() {
+    let routeData = router.resolve("/help");
+    window.open(routeData.href, "_blank");
+}
 </script>
 
 <template>
@@ -18,6 +23,9 @@ function exit() {
         <div class="left">
             <button class="icon" @click="exit">
                 <bootstrap-icon icon="box-arrow-left" />
+            </button>
+            <button class="icon" @click="exit">
+                <bootstrap-icon icon="question" />
             </button>
         </div>
         <div class="center">

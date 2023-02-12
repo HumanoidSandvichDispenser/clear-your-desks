@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useSkillsStore } from "./store/skills";
+import NavigationBar from "./components/NavigationBar.vue";
 
 const skills = useSkillsStore();
 skills.readFromLocalStorage();

@@ -1,5 +1,5 @@
 <template>
-    <table>
+    <table class="help-menu">
         <th>LaTeX</th>
         <th>Render</th>
         <tr>
@@ -24,3 +24,9 @@
         </tr>
     </table>
 </template>
+
+<style scoped>
+table.help-menu {
+    margin: auto;
+}
+</style>
