@@ -8,7 +8,7 @@ const problems: { [key: string]: string } = {
     "\\int e^x dx": "e^x + C",
     "\\int \\sin(x) dx": "-\\cos(x) + C",
     "\\int \\cos(x) dx": "\\sin(x) + C",
-    "\\int \\frac{1}{x} dx": "\\ln(x) + C",
+    "\\int \\frac{1}{x} dx": "\\ln\\left|x\\right|+C",
     "\\int udv": "uv-\\int vdu",
 };
 
@@ -36,11 +36,15 @@ export default class LimitProblem extends ProblemData {
     }
 
     checkAnswer(input: string): boolean {
+        if (problems[this.question] == input) {
+            return true;
+        }
+
         // nerdamer uses `log` instead of `ln`
         let answer = this.answer;
         input = input.replace("\\ln", "\\log");
         this.answer = this.answer.replace("\\ln", "\\log");
-        let r = problems[this.question] == input || this.algebraicCheck(input);
+        let r = this.algebraicCheck(input);
         this.answer = answer;
         return r;
     }
