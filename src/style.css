@@ -25,14 +25,13 @@
     --green: #8ac926;
     --dgreen: #32ac42;
     --blue: #1982c4;
-    --lblue: #a8d4f0;
+    --lblue: #d3eaf8;
     --purple: #6a4c93;
 }
 
 body {
     margin: 0;
     display: flex;
-    place-items: center;
     min-width: 320px;
     min-height: 100vh;
 }
@@ -105,18 +104,34 @@ button.selection {
     padding: 1em 2em;
     text-align: left;
     transition-duration: 200ms;
+    outline: 2px var(--bg2) solid;
+    font-weight: 700;
 }
 
 button.selection:hover {
-    background-color: var(--bg1);
+    background-color: var(--bg2);
     /*color: var(--blue);*/
     transition-duration: 200ms;
 }
 
 button.selection.enabled {
-    color: var(--bg0);
-    background-color: var(--fg0);
+    color: var(--blue);
+    background-color: var(--lblue);
+    outline-color: var(--blue);
     transition-duration: 200ms;
+}
+
+button.selection > p {
+    margin-top: 1em;
+}
+
+button.selection > p.subtext {
+    color: var(--fg1);
+    font-size: 12px;
+}
+
+button.selection.enabled > p.subtext {
+    color: var(--blue);
 }
 
 button.icon {
@@ -126,9 +141,7 @@ button.icon {
 }
 
 #app {
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
+    width: 100%;
 }
 
 p {

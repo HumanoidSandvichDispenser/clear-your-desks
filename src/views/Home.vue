@@ -3,15 +3,12 @@ import { ref, computed } from "vue";
 import { useSkillsStore } from "../store/skills";
 import { useRouter } from "vue-router";
 import { useStore } from "../store";
-import TitleVue from "../components/Title.vue";
 import Links from "../components/Links.vue";
 
 const router = useRouter();
 
 const store = useStore();
 const skills = useSkillsStore();
-
-//const selectedSkills = ref<string[]>([]);
 
 function toggleTopic(topic: string) {
     let idx = store.selectedSkills.indexOf(topic);
@@ -39,8 +36,6 @@ function selectLowRetention() {
 
 <template>
     <div class="home">
-        <title-vue />
-        <links />
         <div class="selection-buttons">
             <button
                 :class="{
@@ -108,6 +103,7 @@ function selectLowRetention() {
 .home {
     max-width: 768px;
     margin: auto;
+    margin-top: 64px;
 }
 
 .selection-buttons {
@@ -120,19 +116,6 @@ function selectLowRetention() {
 
 .selection-buttons > button.selection {
     flex: 1;
-}
-
-.selection-buttons > button.selection > p {
-    margin-top: 1em;
-}
-
-.selection-buttons > button.selection > p.subtext {
-    color: var(--fg1);
-    font-size: 12px;
-}
-
-.selection-buttons > button.selection.enabled > p.subtext {
-    color: var(--bg0);
 }
 
 .notice {

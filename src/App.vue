@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useSkillsStore } from "./store/skills";
 import NavigationBar from "./components/NavigationBar.vue";
+import router from "./router";
+import SkillList from "./components/SkillList.vue";
 
 const skills = useSkillsStore();
 skills.readFromLocalStorage();
@@ -8,6 +10,7 @@ console.log(skills.current);
 </script>
 
 <template>
+    <navigation-bar />
     <main class="view">
         <router-view v-slot="{ Component }">
             <transition name="fade" mode="out-in">
@@ -32,8 +35,15 @@ console.log(skills.current);
     filter: drop-shadow(0 0 2em #42b883aa);
 }
 
+.root {
+    width: 1024px;
+    padding: 2rem;
+}
+
 main {
     width: 1024px;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .fade-enter-active,

@@ -24,9 +24,6 @@ function openHelp() {
             <button class="icon" @click="exit">
                 <bootstrap-icon icon="box-arrow-left" />
             </button>
-            <button class="icon" @click="exit">
-                <bootstrap-icon icon="question" />
-            </button>
         </div>
         <div class="center">
             <div class="score">

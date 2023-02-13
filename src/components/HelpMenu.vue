@@ -1,6 +1,7 @@
 <template>
     <table class="help-menu">
         <th>LaTeX</th>
+        <th>Math</th>
         <th>Render</th>
         <tr>
             <td><code>\pi</code> or <code>pi</code></td>

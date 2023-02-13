@@ -3,6 +3,7 @@ import Home from "./views/Home.vue";
 import Game from "./views/Game.vue";
 import Results from "./views/Results.vue";
 import Help from "./views/Help.vue";
+import Stats from "./views/Stats.vue";
 
 const routes: RouteRecordRaw[] = [
     {
@@ -30,12 +31,11 @@ const routes: RouteRecordRaw[] = [
         name: "Help",
         component: Help,
     },
-    /*
     {
-        "path": "/bigsheet",
-        name: "Big Sheet",
-    }
-    */
+        "path": "/stats",
+        name: "Stats",
+        component: Stats,
+    },
 ];
 
 const router = createRouter({
