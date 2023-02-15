@@ -16,6 +16,7 @@ import SuccessAudio2 from "../assets/success2.mp3";
 import SuccessAudio3 from "../assets/success3.mp3";
 import SuccessAudio4 from "../assets/success4.mp3";
 import SuccessAudio5 from "../assets/success5.mp3";
+import FailureAudio from "../assets/failure.mp3";
 
 const store = useStore();
 const skills = useSkillsStore();
@@ -44,6 +45,7 @@ const isCorrect = ref(false);
 const isRevealed = ref(false);
 
 function end() {
+    console.log(skills.current);
     skills.writeToLocalStorage();
     router.push("/results");
 }
@@ -104,14 +106,23 @@ function onCorrect(dt: number) {
         audio.src = SuccessAudio3;
     } else if (streak.value == 4) {
         audio.src = SuccessAudio4;
-    } else if (streak.value == 5) {
+    } else if (streak.value >= 5) {
         audio.src = SuccessAudio5;
     }
     audio.play();
+    audio.onended = () => {
+        audio.remove();
+    };
 }
 
 function onIncorrect() {
     streak.value = 0;
+    //let audioIndex = Math.min(streak.value, 5);
+    let audio = new Audio(FailureAudio);
+    audio.play();
+    audio.onended = () => {
+        audio.remove();
+    };
 }
 
 function submit() {
@@ -140,8 +151,8 @@ function submit() {
     skill.retain(rating);
     let k2 = skill.k;
     console.log("Retaining");
-    console.log(skill);
-    console.log(skills.current);
+    console.log("Rating: " + rating);
+    console.log("New skill score: " + skill.score);
 
     store.responses.push({
         submission: input,
@@ -230,6 +241,7 @@ if (!isInitialized) {
         <solution-popup
             :is-revealed="isRevealed"
             :is-correct="isCorrect"
+            :question="currentProblem?.question"
             :answer="currentProblem?.answer"
             :response="mathfield?.value"
         />

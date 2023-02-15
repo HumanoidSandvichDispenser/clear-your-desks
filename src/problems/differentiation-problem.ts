@@ -14,11 +14,12 @@ const problems: { [key: string]: string } = {
     "a^b": "\\frac{db}{dx} a^b \\ln(a)", // same here
     "\\log_b(x)": "\\frac{1}{x\\ln b}", // same here
     "\\ln(x)": "\\frac{1}{x}",
+    "f(g(x))": "f^{\\prime}\\left(g\\left(x\\right)\\right)g^{\\prime}\\left(x\\right)",
 };
 
-export default class LimitProblem extends ProblemData {
+export default class DifferentiationProblem extends ProblemData {
     get skillName() {
-        return "Limits";
+        return "Differentiation";
     }
 
     get instruction() {
@@ -36,15 +37,19 @@ export default class LimitProblem extends ProblemData {
     static generate(count: number): ProblemData[] | undefined {
         const questions = pickNFrom(Object.keys(problems), count);
         return questions.map((question: string) =>
-            new LimitProblem("\\frac{d}{dx}" + question, problems[question]));
+            new DifferentiationProblem(
+                "\\frac{d}{dx}" + question, problems[question]));
     }
 
     checkAnswer(input: string): boolean {
+        if (problems[this.question] == input) {
+            return true;
+        }
         // nerdamer uses `log` instead of `ln`
         let answer = this.answer;
         input = input.replace("\\ln", "\\log");
         this.answer = this.answer.replace("\\ln", "\\log");
-        let r = problems[this.question] == input || this.algebraicCheck(input);
+        let r = this.algebraicCheck(input);
         this.answer = answer;
         return r;
     }

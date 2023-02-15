@@ -48,14 +48,14 @@ export const useSkillsStore = defineStore("skills", () => {
     }
 
     function writeToLocalStorage() {
+        console.log("writing to local storage");
+        console.log(current.value);
         // backup just in case
         window.localStorage.setItem("skills.bak",
             window.localStorage.getItem("skills") ?? "");
 
         let json = JSON.stringify(current.value);
         window.localStorage.setItem("skills", json);
-        console.log("writing to local storage");
-        console.log(json);
     }
 
     function getSkill(name: string): Skill {

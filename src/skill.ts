@@ -14,7 +14,7 @@ export interface ISkill {
     /**
      * The rate of retention decay (`k` in dy/dt = ky).
      */
-    k: number;
+    //k: number;
 
     /**
      * The score of this skill.
@@ -80,7 +80,12 @@ export default class Skill implements ISkill {
         this.retention = 1;
         this.lastRetainTime = new Date().getTime();
         //return this.k = this.predictK(score);
-        return (this.score += score);
+        //this.score = (this.score ?? 0) + score;
+        if (this.score == undefined) {
+            this.score = 0;
+        }
+        this.score += score;
+        return this.score;
     }
 
     predictK(score: number): number {
@@ -97,6 +102,10 @@ export default class Skill implements ISkill {
     }
 
     get k(): number {
-        return Math.atan(-this.score) * 2 / Math.PI + 1;
+        let k = Math.atan(-this.score) * 2 / Math.PI + 1;
+        if (Number.isNaN(k)) {
+            return 1;
+        }
+        return k;
     }
 }
