@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import TrigDerivativeProblem from "../problems/trig-derivative-problem";
 import DifferentiationProblem from "../problems/differentiation-problem";
 import GeometryProblem from "../problems/geometry-problem";
 import IntegrationProblem from "../problems/integration-problem";
@@ -15,6 +16,7 @@ export const useSkillsStore = defineStore("skills", () => {
         new Skill("Trigonometry", 0, undefined, TrigProblem),
         new Skill("Inverse Trigonometry", 0, undefined, InverseTrigProblem),
         new Skill("Trigonometric Identities", 0, undefined, TrigIdentityProblem),
+        new Skill("Trigonometric Derivatives", 0, undefined, TrigDerivativeProblem),
         new Skill("Limits", 0, undefined, LimitProblem),
         new Skill("Differentiation", 0, undefined, DifferentiationProblem),
         new Skill("Integration", 0, undefined, IntegrationProblem),

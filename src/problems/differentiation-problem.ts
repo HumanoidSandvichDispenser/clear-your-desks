@@ -2,12 +2,6 @@ import { pickNFrom } from "../utils";
 import ProblemData from "./problem-data";
 
 const problems: { [key: string]: string } = {
-    "\\sin(x)": "\\cos(x)",
-    "\\cos(x)": "-\\sin(x)",
-    //"\\tan(x)",
-    //"\\cot(x)",
-    "\\sec(x)": "\\sec(x) \\tan(x)",
-    "\\csc(x)": "-\\csc(x) \\cot(x)",
     "x^n": "nx^{n - 1}",
     "e^x": "e^x",
     "a^x": "a^x \\ln(a)", // it's ln(a)rbut nerdamer uses `log` for `ln`
