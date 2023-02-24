@@ -53,7 +53,7 @@ function graph(eq: string) {
         </div>
         <h1>How is retention calculated?</h1>
         <p v-katex:auto>
-            The retention curve is given by the function \(r(t) = e^{-kt}\),
+            The retention curve is given by the function \(R(t) = e^{-kt}\),
             where \(t\) is the time, which in this case is time in hours.
         </p>
         <p v-katex:auto>

@@ -1,4 +1,6 @@
 import nerdamer from "nerdamer";
+import Algebrite from "algebrite";
+import AlgebraLatex from "algebra-latex";
 
 export default class ProblemData {
     /**
@@ -49,26 +51,41 @@ export default class ProblemData {
     algebraicCheck(input: string): boolean {
         try {
             let nInput = nerdamer.convertFromLaTeX(input);
-            let nQuestion = nerdamer.convertFromLaTeX(this.answer);
+            let nAnswer = nerdamer.convertFromLaTeX(this.answer);
 
-            let algebraicCheck = nInput.eq(nQuestion);
+            let algebraicCheck = nInput.eq(nAnswer);
+
             if (algebraicCheck) {
                 return true;
             }
 
             // raise both numbers to the second power since nerdamer can not
             // rationalize denominators by itself
-            algebraicCheck = nInput.pow(2).eq(nQuestion.pow(2));
-            return algebraicCheck;
+            algebraicCheck = nInput.pow(2).eq(nAnswer.pow(2));
 
+            if (algebraicCheck) {
+                return true;
+            }
         } catch (err) {
             if (err instanceof Error) {
                 if (err.name == "ParseError") {
+                    console.log("parse error!");
                     return false;
                 }
             }
             throw err;
         }
+
+        // at this point nerdamer is sucking at doing this so let's use
+        // algebrite
+        return false;
+    }
+
+    algebriteCheck(input: string): boolean {
+        let inputObj = new AlgebraLatex().parseLaTeX(input);
+        let answerObj = new AlgebraLatex().parseLaTeX(this.answer);
+        let res = Algebrite.check(`${inputObj} = ${answerObj}`);
+        return res == "1";
     }
 
     evalCheck(input: string): boolean {

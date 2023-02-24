@@ -194,6 +194,7 @@ function init() {
                 "csc": "\\csc",
                 "sec": "\\sec",
                 "cot": "\\cot",
+                "theta": "\\theta",
             },
         });
     }

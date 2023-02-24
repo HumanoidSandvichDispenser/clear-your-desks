@@ -46,7 +46,11 @@ function selectLowRetention() {
                 disabled
             >
                 Zen Mode
-                <p>coming soon <img src="https://cdn.7tv.app/emote/603caa69faf3a00014dff0b1/1x.webp" /></p>
+                <p>
+                    coming soon
+                    <img src="https://cdn.7tv.app/emote/603caa69faf3a00014dff0b1/1x.webp" />
+                    when I feel like working on it
+                </p>
             </button>
             <button
                 :class="{
