@@ -4,6 +4,8 @@ import router from "../router";
 
 const githubHomepage =
     "https://github.com/humanoidsandvichdispenser/clear-your-desks";
+const bigSheetPage =
+    "https://notes.sandvich.xyz/apcalc/big-sheet/";
 
 function goto(path: string) {
 
@@ -66,6 +68,16 @@ function gotoExternal(path: string) {
                 </button>
             </a>
         </div>
+        <div>
+            <a
+                :href="bigSheetPage"
+                target="_blank"
+            >
+                <button class="selection tab">
+                    Big Sheet
+                </button>
+            </a>
+        </div>
     </div>
 </template>
 
@@ -74,8 +86,7 @@ function gotoExternal(path: string) {
     display: flex;
     flex-direction: row;
     column-gap: 8px;
-    width: 100%;
-    padding: 8px;
+    padding: 16px;
     flex-shrink: 0;
 }
 

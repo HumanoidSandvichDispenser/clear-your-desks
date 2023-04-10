@@ -10,6 +10,9 @@ const problems: { [key: string]: string } = {
     "\\int \\cos(x) dx": "\\sin(x) + C",
     "\\int \\frac{1}{x} dx": "\\ln\\left|x\\right|+C",
     "\\int udv": "uv-\\int vdu",
+    "\\frac{d}{dx} \\int_{0}^{g(x)} f(t) dt":
+        "f\\left(g\\left(x\\right)\\right)g^{\\prime}\\left(x\\right)",
+    "\\int_a^b f(x) dx + \\int_b^c f(x) dx": "\\int_a^cf\\left(x\\right)dx",
 };
 
 export default class LimitProblem extends ProblemData {

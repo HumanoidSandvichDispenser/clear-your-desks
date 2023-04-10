@@ -2,6 +2,7 @@
 const props = defineProps({
     isRevealed: Boolean,
     isCorrect: Boolean,
+    question: String,
     answer: String,
     response: String,
 });
@@ -22,7 +23,12 @@ const props = defineProps({
                 <span v-katex="answer"></span>
                 <div class="latex-solution">
                     <div>
-                        LaTeX: {{ answer }}
+                        Question: {{ question }}
+                    </div>
+                    <div>
+                        Expected Answer: {{ answer }}
+                    </div>
+                    <div>
                         Your response: {{ response }}.
                     </div>
                     <div>

@@ -2,22 +2,17 @@ import { pickNFrom } from "../utils";
 import ProblemData from "./problem-data";
 
 const problems: { [key: string]: string } = {
-    "\\frac{d}{dx}x^n": "nx^{n - 1}",
-    "\\frac{d}{dx}e^x": "e^x",
-    "\\frac{d}{dx}a^x": "a^x\\ln(a)", // it's ln(a) but nerdamer uses `log` for `ln`
-    "\\frac{d}{dx}a^b": "\\frac{db}{dx}a^b\\ln(a)", // same here
-    "\\frac{d}{dx}\\log_b(x)": "\\frac{1}{x\\ln b}", // same here
-    "\\frac{d}{dx}\\ln(x)": "\\frac{1}{x}",
-    "\\frac{d}{dx}f(g(x))": "f^{\\prime}\\left(g\\left(x\\right)\\right)g^{\\prime}\\left(x\\right)",
+    "\\frac{dy}{dt} = ky, y = ?": "y_0e^{kt}",
+    "\\frac{dy}{dt} = ky(L - y), y = ?": "\\frac{L}{1 + Ae^{-Lkt}}",
 };
 
-export default class DifferentiationProblem extends ProblemData {
+export default class DifferentialEquationProblem extends ProblemData {
     get skillName() {
-        return "Differentiation";
+        return "Differential Equations";
     }
 
     get instruction() {
-        return "Differentiate the expression.";
+        return "Find y given dy/dx.";
     }
 
     get recallTime() {
@@ -31,7 +26,7 @@ export default class DifferentiationProblem extends ProblemData {
     static generate(count: number): ProblemData[] | undefined {
         const questions = pickNFrom(Object.keys(problems), count);
         return questions.map((question: string) =>
-            new DifferentiationProblem(question, problems[question]));
+            new DifferentialEquationProblem(question, problems[question]));
     }
 
     checkAnswer(input: string): boolean {

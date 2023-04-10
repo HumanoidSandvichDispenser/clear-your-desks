@@ -1,6 +1,8 @@
 import { assert, describe, expect, it } from "vitest";
 import { pickFrom, pickNFrom, random, range } from "./utils";
 import nerdamer from "nerdamer";
+import Algebrite from "algebrite";
+import AlgebraLatex from "algebra-latex";
 
 describe("pickFrom methods", () => {
     it("should return unique values", () => {
@@ -54,3 +56,13 @@ describe("nerdamer", () => {
         console.log(a.pow(2).eq(b.pow(2)));
     });
 });;
+
+describe("algebrite", () => {
+    console.log(AlgebraLatex);
+    it("should correctly parse stuff ", () => {
+        let inputObj = new AlgebraLatex().parseLaTeX("a\\sin\\theta");
+        let answerObj = "a * sin(theta)";
+        let res = Algebrite.check(`${inputObj} = ${answerObj}`);
+        expect(res).toEqual("1");
+    });
+});

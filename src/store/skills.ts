@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import DifferentialEquationProblem from "../problems/differential-eq-problem";
+import TrigDerivativeProblem from "../problems/trig-derivative-problem";
 import DifferentiationProblem from "../problems/differentiation-problem";
 import GeometryProblem from "../problems/geometry-problem";
 import IntegrationProblem from "../problems/integration-problem";
@@ -9,17 +11,25 @@ import TrigIdentityProblem from "../problems/trig-identity-problem";
 import InverseTrigProblem from "../problems/inverse-trig-problem";
 import TrigProblem from "../problems/trig-problem";
 import Skill, { ISkill } from "../skill";
+import PolarProblem from "../problems/polar-problem";
+import MaclaurinProblem from "../problems/maclaurin-problem";
+import MaclaurinNthTermProblem from "../problems/maclaurin-nth-term-problem";
 
 export const useSkillsStore = defineStore("skills", () => {
     const available: Skill[] = [
         new Skill("Trigonometry", 0, undefined, TrigProblem),
         new Skill("Inverse Trigonometry", 0, undefined, InverseTrigProblem),
         new Skill("Trigonometric Identities", 0, undefined, TrigIdentityProblem),
+        new Skill("Trigonometric Derivatives", 0, undefined, TrigDerivativeProblem),
         new Skill("Limits", 0, undefined, LimitProblem),
         new Skill("Differentiation", 0, undefined, DifferentiationProblem),
         new Skill("Integration", 0, undefined, IntegrationProblem),
         new Skill("Geometry", 0, undefined, GeometryProblem),
         new Skill("Particle Motion", 0, undefined, ParticleMotionProblem),
+        new Skill("Maclaurin Series", 0, undefined, MaclaurinProblem),
+        new Skill("Maclaurin Series (nth term)", 0, undefined, MaclaurinNthTermProblem),
+        //new Skill("Differential Equations", 0, undefined, DifferentialEquationProblem),
+        //new Skill("Polar Equations", 0, undefined, PolarProblem),
         //new Skill("Parametrics & Polars", 0),
     ];
 
@@ -48,14 +58,14 @@ export const useSkillsStore = defineStore("skills", () => {
     }
 
     function writeToLocalStorage() {
+        console.log("writing to local storage");
+        console.log(current.value);
         // backup just in case
         window.localStorage.setItem("skills.bak",
             window.localStorage.getItem("skills") ?? "");
 
         let json = JSON.stringify(current.value);
         window.localStorage.setItem("skills", json);
-        console.log("writing to local storage");
-        console.log(json);
     }
 
     function getSkill(name: string): Skill {

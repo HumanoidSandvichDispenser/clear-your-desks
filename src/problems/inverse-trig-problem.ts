@@ -30,7 +30,7 @@ export const DOMAIN: { [key: string]: string[] } = {
         "-\\frac{\\pi}{3}",
         "-\\frac{\\pi}{4}",
         "-\\frac{\\pi}{6}",
-        "0",
+        //"0", this creates some problems for us with formatting
         "\\frac{\\pi}{6}",
         "\\frac{\\pi}{4}",
         "\\frac{\\pi}{3}",
@@ -69,7 +69,7 @@ export const DOMAIN: { [key: string]: string[] } = {
 
 export default class InverseTrigProblem extends ProblemData {
     get skillName() {
-        return "Trigonometry";
+        return "Inverse Trigonometry";
     }
 
     get instruction() {
