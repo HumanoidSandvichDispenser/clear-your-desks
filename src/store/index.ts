@@ -26,6 +26,10 @@ export const useStore = defineStore("store", () => {
 
     const isSupaLidlMode = ref(false);
 
+    const questionCount = ref(10);
+
+    const timePerQuestion = ref(12);
+
     function generateProblems() {
         const skills = useSkillsStore();
         let selectedSkillObjects: Skill[];
@@ -34,28 +38,22 @@ export const useStore = defineStore("store", () => {
             // default
             selectedSkillObjects = Array.from(skills.current);
         } else {
-            /*
-            selectedSkillObjects = selectedSkills.value.map((skill) =>
-                skills.getSkill(skill));
-            */
             selectedSkillObjects = skills.available.filter((skill) =>
                 selectedSkills.value.includes(skill.name));
         }
         responses.value = [];
         problems.value = [];
-        /*
-        problems.value = problems.value
-            //.concat(DifferentiationProblem.generate(5) ?? [])
-            .concat(IntegrationProblem.generate(5) ?? [])
-        */
         selectedSkillObjects.forEach(skill => {
-            let generatedProblems = skill.problem?.generate(5);
+            // probably a bad idea to generate so many unused questions for
+            // each topic but whatever
+            let generatedProblems = skill
+                .problem?.generate(questionCount.value);
             if (generatedProblems) {
                 problems.value = problems.value.concat(generatedProblems);
             }
         });
         problems.value = shuffle<ProblemData>(problems.value);
-        problems.value = problems.value.slice(0, 10);
+        problems.value = problems.value.slice(0, questionCount.value);
     }
 
     return {
@@ -64,6 +62,8 @@ export const useStore = defineStore("store", () => {
         problems,
         responses,
         score,
+        questionCount,
+        timePerQuestion,
         generateProblems,
         isSupaLidlMode,
         //maxTime,

@@ -161,7 +161,7 @@ function init() {
 
     score.value = 0;
     currentProblemIndex.value = -1;
-    timer.time = 120;
+    timer.time = store.questionCount * store.timePerQuestion;
     next();
 
     if (mathfield.value) {

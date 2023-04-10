@@ -10,6 +10,9 @@ const router = useRouter();
 const store = useStore();
 const skills = useSkillsStore();
 
+store.questionCount = 10;
+store.timePerQuestion = 12;
+
 function toggleTopic(topic: string) {
     let idx = store.selectedSkills.indexOf(topic);
     if (idx > -1) {
@@ -59,6 +62,29 @@ function selectLowRetention() {
                 <p>Try to get the highest score possible</p>
             </button>
         </div>
+        <div class="range-selection">
+            <input type="range" v-model="store.questionCount" min="1" max="100">
+            <span>{{ store.questionCount }} questions</span>
+            <button
+                v-if="store.questionCount != 10"
+                @click="store.questionCount = 10"
+            >
+                Reset to default
+            </button>
+        </div>
+        <div class="range-selection">
+            <input type="range" v-model="store.timePerQuestion" min="1" max="30">
+            <span>
+                {{ store.timePerQuestion }} seconds per question
+                ({{ store.questionCount * store.timePerQuestion }} seconds total)
+            </span>
+            <button
+                v-if="store.timePerQuestion != 12"
+                @click="store.timePerQuestion = 12"
+            >
+                Reset to default
+            </button>
+        </div>
         <hr>
         <h1
             class="notice"
@@ -104,6 +130,16 @@ function selectLowRetention() {
     max-width: 768px;
     margin: auto;
     margin-top: 64px;
+}
+
+.range-selection {
+    align-items: center;
+    display: flex;
+    vertical-align: middle;
+}
+
+.range-selection > * {
+    padding: 8px;
 }
 
 .selection-buttons {
